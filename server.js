@@ -58,7 +58,7 @@ app.get("/productos", async (req, res) => {
   }
 });
 // Buscar producto por código único
-app.get("/productos/codigo/:codigo", async (req, res) => {
+app.get("/productos/id/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const result = await pool.query(
