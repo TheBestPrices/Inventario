@@ -15,9 +15,7 @@ app.use(express.static(path.join(__dirname, "frontend")));
 // Conexión a Supabase (usa la variable de entorno DATABASE_URL en Render)
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-  host: "db.pdtzmtetbuevtuzjmabx.supabase.co", // fuerza IPv4
-  port: 5432
+  ssl: { rejectUnauthorized: false }
 });
 
 // Crear tablas si no existen
