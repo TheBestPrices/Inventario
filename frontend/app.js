@@ -7,7 +7,7 @@ async function registrarProducto(event) {
     precio: parseFloat(document.getElementById("precio").value),
     stock: parseInt(document.getElementById("stock").value)
   };
-  await fetch("http://localhost:3000/productos", {
+  await fetch("/productos", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(producto)
