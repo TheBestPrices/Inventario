@@ -3,7 +3,7 @@ const sqlite3 = require("sqlite3").verbose();
 const cors = require("cors");
 
 const app = express();
-const PORT = 3000;
+//const PORT = 3000;
 
 // Middleware
 app.use(cors());
@@ -146,6 +146,9 @@ app.get("/reporte-productos", (req, res) => {
 });
 
 // ================== INICIO SERVIDOR ==================
+const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+
