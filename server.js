@@ -1,5 +1,5 @@
 const express = require("express");
-const sqlite3 = require("sqlite3").verbose();
+const { Pool } = require("pg");   // 👈 usamos pg en lugar de sqlite3
 const cors = require("cors");
 const path = require("path");
 
@@ -12,14 +12,53 @@ app.use(express.json());
 // 👉 Servir frontend (index.html, CSS, JS)
 app.use(express.static(path.join(__dirname, "frontend")));
 
-// Base de datos SQLite
-const db = new sqlite3.Database("./db.sqlite");
+// Conexión a Supabase (usa la variable de entorno DATABASE_URL en Render)
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
+});
 
-// ... aquí siguen todas tus rutas de productos, compras, ventas, etc.
+// Crear tablas si no existen
+(async () => {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS productos (
+      id SERIAL PRIMARY KEY,
+      nombre TEXT,
+      categoria TEXT,
+      precio REAL,
+      stock INTEGER
+    )
+  `);
+})();
+
+// ================== RUTAS ==================
+
+// Registrar producto
+app.post("/productos", async (req, res) => {
+  const { nombre, categoria, precio, stock } = req.body;
+  try {
+    const result = await pool.query(
+      "INSERT INTO productos (nombre, categoria, precio, stock) VALUES ($1, $2, $3, $4) RETURNING id",
+      [nombre, categoria, precio, stock]
+    );
+    res.json({ id: result.rows[0].id });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Listar productos
+app.get("/productos", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM productos");
+    res.json(result.rows);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 
 // ================== INICIO SERVIDOR ==================
 const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
