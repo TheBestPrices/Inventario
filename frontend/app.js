@@ -20,4 +20,32 @@ async function registrarProducto(event) {
 async function registrarCompra(event) {
   event.preventDefault();
   const compra = {
-    producto_id: parseInt(document.getElementById("compra_producto_id
+    producto_id: parseInt(document.getElementById("compra_producto_id").value),
+    cantidad: parseInt(document.getElementById("compra_cantidad").value),
+    costo: parseFloat(document.getElementById("compra_costo").value)
+  };
+  await fetch("/compras", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(compra)
+  });
+  alert("Compra registrada!");
+  listarProductos();
+}
+
+// Registrar venta
+async function registrarVenta(event) {
+  event.preventDefault();
+  const venta = {
+    producto_id: parseInt(document.getElementById("venta_producto_id").value),
+    cantidad: parseInt(document.getElementById("venta_cantidad").value),
+    precio: parseFloat(document.getElementById("venta_precio").value)
+  };
+  await fetch("/ventas", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(venta)
+  });
+  alert("Venta registrada!");
+  listarProductos();
+}
