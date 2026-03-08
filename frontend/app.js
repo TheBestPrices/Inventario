@@ -85,7 +85,6 @@ async function listarProductos() {
     lista.appendChild(div);
   });
 }
-}
 
 // Historial de compras
 async function verCompras() {
