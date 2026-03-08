@@ -10,7 +10,13 @@
   <header>
     <h1>📦 Gestor de Inventario</h1>
   </header>
-
+<section class="busqueda">
+  <form onsubmit="buscarProducto(event)">
+    <input type="text" id="buscar_codigo" placeholder="Buscar por código o nombre">
+    <button type="submit" class="lupa">🔍</button>
+  </form>
+  <div id="resultado"></div>
+</section>
   <main>
     <!-- Registrar Producto -->
     <section class="card">
@@ -81,6 +87,7 @@
 </body>
 
 </html>
+
 
 
 
