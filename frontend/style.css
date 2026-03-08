@@ -13,35 +13,35 @@ header {
   padding: 1rem;
   text-align: center;
 }
-.busqueda {
-  background: #fff;
-  padding: 0.8rem;
-  text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
 .busqueda form {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 0.5rem;
 }
 
 .busqueda input {
   flex: 1;
-  max-width: 300px;
-  padding: 0.6rem;
+  max-width: 500px;   /* ancho máximo del cuadro */
+  padding: 0.8rem;
+  font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;
 }
 
 .busqueda .lupa {
+  width: 32px;        /* ancho fijo */
+  height: 32px;       /* alto fijo */
   background: #3498db;
   color: #fff;
   border: none;
-  border-radius: 6px;
-  padding: 0.6rem 1rem;
+  border-radius: 50%; /* forma circular */
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 16px;    /* tamaño del ícono 🔍 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;         /* sin relleno extra */
 }
 
 .busqueda .lupa:hover {
@@ -154,4 +154,5 @@ footer {
     padding: 0.8rem;
   }
 }
+
 
