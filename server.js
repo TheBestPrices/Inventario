@@ -13,8 +13,6 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "frontend")));
 
 // Conexión a Supabase (usa la variable de entorno DATABASE_URL en Render)
-const { Pool } = require("pg");
-
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
