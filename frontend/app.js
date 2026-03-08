@@ -112,4 +112,55 @@ async function verVentas() {
     div.textContent = `Venta #${v.id} → Producto ${v.producto_id}, Cantidad: ${v.cantidad}, Precio: $${v.precio}`;
     historial.appendChild(div);
   });
+  // Buscar producto y mostrar en modal
+async function buscarProducto(e) {
+  e.preventDefault();
+  const query = document.getElementById("buscar_codigo").value.trim();
+
+  if (!query) {
+    alert("Escribe un ID o código para buscar.");
+    return;
+  }
+
+  // Si es número, busca por ID; si es texto, busca por código
+  let url;
+  if (!isNaN(query)) {
+    url = `${API_URL}/productos/id/${query}`;
+  } else {
+    url = `${API_URL}/productos/codigo/${query}`;
+  }
+
+  try {
+    const res = await fetch(url);
+    const productos = await res.json();
+
+    if (productos.length === 0) {
+      alert("No se encontró ningún producto.");
+      return;
+    }
+
+    const p = productos[0];
+    const detalle = document.getElementById("detalleProducto");
+    detalle.innerHTML = `
+      <h2>${p.nombre}</h2>
+      <p><strong>Categoría:</strong> ${p.categoria}</p>
+      <p><strong>Descripción:</strong> ${p.descripcion || "Sin descripción"}</p>
+      <p><strong>Precio:</strong> $${p.precio}</p>
+      <p><strong>Stock:</strong> ${p.stock}</p>
+      <p><strong>ID:</strong> ${p.id}</p>
+      <p><strong>Código:</strong> ${p.codigo}</p>
+      ${p.imagen_url ? `<img src="${p.imagen_url}" alt="${p.nombre}" style="max-width:100%;">` : ""}
+    `;
+
+    // Mostrar modal
+    document.getElementById("modalProducto").style.display = "block";
+  } catch (error) {
+    console.error(error);
+    alert("Error al buscar el producto.");
+  }
+}
+
+function cerrarModal() {
+  document.getElementById("modalProducto").style.display = "none";
+}
 }
