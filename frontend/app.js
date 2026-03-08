@@ -1,8 +1,10 @@
 const API_URL = "https://inventario-reel.onrender.com"; // 👈 cambia por tu URL real
 
 // Registrar producto
+// Registrar producto con foto
 async function registrarProducto(e) {
   e.preventDefault();
+
   const formData = new FormData();
   formData.append("nombre", document.getElementById("nombre").value);
   formData.append("categoria", document.getElementById("categoria").value);
@@ -18,15 +20,6 @@ async function registrarProducto(e) {
   const res = await fetch(`${API_URL}/productos`, {
     method: "POST",
     body: formData
-  });
-
-  const data = await res.json();
-  alert("Producto registrado con ID: " + data.id);
-}
-  const res = await fetch(`${API_URL}/productos`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(producto)
   });
 
   const data = await res.json();
@@ -72,6 +65,7 @@ async function registrarVenta(e) {
 }
 
 // Listar productos
+// Listar productos con imagen y descripción
 async function listarProductos() {
   const res = await fetch(`${API_URL}/productos`);
   const productos = await res.json();
@@ -80,9 +74,17 @@ async function listarProductos() {
   lista.innerHTML = "";
   productos.forEach(p => {
     const div = document.createElement("div");
-    div.textContent = `${p.id} - ${p.nombre} (${p.categoria}) - $${p.precio} - Stock: ${p.stock}`;
+    div.classList.add("producto-card");
+
+    div.innerHTML = `
+      <h3>${p.nombre} (${p.categoria})</h3>
+      <p>${p.descripcion || "Sin descripción"}</p>
+      <p>Precio: $${p.precio} - Stock: ${p.stock}</p>
+      ${p.imagen_url ? `<img src="${p.imagen_url}" alt="${p.nombre}" style="max-width:150px; border-radius:8px;">` : ""}
+    `;
     lista.appendChild(div);
   });
+}
 }
 
 // Historial de compras
