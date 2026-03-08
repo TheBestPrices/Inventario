@@ -1,57 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>Inventario</title>
+  <meta charset="UTF-8">
+  <title>Gestor de Inventario</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Gestor de Inventario</h1>
+  <header>
+    <h1>📦 Gestor de Inventario</h1>
+  </header>
 
-  <!-- Registrar Producto -->
-  <h2>Registrar Producto</h2>
-  <form onsubmit="registrarProducto(event)">
-    <input type="text" id="nombre" placeholder="Nombre" required>
-    <input type="text" id="categoria" placeholder="Categoría">
-    <input type="number" id="precio" placeholder="Precio" required>
-    <input type="number" id="stock" placeholder="Stock inicial" value="0">
-    <button type="submit">Guardar</button>
-  </form>
+  <main>
+    <!-- Registrar Producto -->
+    <section class="card">
+      <h2>Registrar Producto</h2>
+      <form onsubmit="registrarProducto(event)">
+        <input type="text" id="nombre" placeholder="Nombre" required>
+        <input type="text" id="categoria" placeholder="Categoría">
+        <input type="number" id="precio" placeholder="Precio" required>
+        <input type="number" id="stock" placeholder="Stock inicial" value="0">
+        <button type="submit">Guardar</button>
+      </form>
+    </section>
 
-  <!-- Registrar Compra -->
-  <h2>Registrar Compra</h2>
-  <form onsubmit="registrarCompra(event)">
-    <input type="number" id="compra_producto_id" placeholder="ID del producto" required>
-    <input type="number" id="compra_cantidad" placeholder="Cantidad" required>
-    <input type="number" id="compra_costo" placeholder="Costo total" required>
-    <button type="submit">Registrar Compra</button>
-  </form>
+    <!-- Registrar Compra -->
+    <section class="card">
+      <h2>Registrar Compra</h2>
+      <form onsubmit="registrarCompra(event)">
+        <input type="number" id="compra_producto_id" placeholder="ID del producto" required>
+        <input type="number" id="compra_cantidad" placeholder="Cantidad" required>
+        <input type="number" id="compra_costo" placeholder="Costo total" required>
+        <button type="submit">Registrar Compra</button>
+      </form>
+    </section>
 
-  <!-- Registrar Venta -->
-  <h2>Registrar Venta</h2>
-  <form onsubmit="registrarVenta(event)">
-    <input type="number" id="venta_producto_id" placeholder="ID del producto" required>
-    <input type="number" id="venta_cantidad" placeholder="Cantidad" required>
-    <input type="number" id="venta_precio" placeholder="Precio total" required>
-    <button type="submit">Registrar Venta</button>
-  </form>
+    <!-- Registrar Venta -->
+    <section class="card">
+      <h2>Registrar Venta</h2>
+      <form onsubmit="registrarVenta(event)">
+        <input type="number" id="venta_producto_id" placeholder="ID del producto" required>
+        <input type="number" id="venta_cantidad" placeholder="Cantidad" required>
+        <input type="number" id="venta_precio" placeholder="Precio total" required>
+        <button type="submit">Registrar Venta</button>
+      </form>
+    </section>
 
-  <!-- Lista de Productos -->
-  <h2>Lista de Productos</h2>
-  <button onclick="listarProductos()">Ver Productos</button>
-  <div id="lista"></div>
+    <!-- Lista de Productos -->
+    <section class="card">
+      <h2>Lista de Productos</h2>
+      <button onclick="listarProductos()">Ver Productos</button>
+      <div id="lista"></div>
+    </section>
 
-  <!-- Reporte de Ganancias y Pérdidas -->
-  <h2>Reporte de Ganancias y Pérdidas</h2>
-  <button onclick="verReporte()">Ver Reporte General</button>
-  <button onclick="verReporteProductos()">Ver Reporte por Producto</button>
-  <div id="reporte"></div>
+    <!-- Reportes -->
+    <section class="card">
+      <h2>Reporte de Ganancias y Pérdidas</h2>
+      <button onclick="verReporte()">Ver Reporte General</button>
+      <button onclick="verReporteProductos()">Ver Reporte por Producto</button>
+      <div id="reporte"></div>
+    </section>
 
-  <!-- Historial de Movimientos -->
-  <h2>Historial de Movimientos</h2>
-  <button onclick="verCompras()">Ver Compras</button>
-  <button onclick="verVentas()">Ver Ventas</button>
-  <div id="historial"></div>
+    <!-- Historial -->
+    <section class="card">
+      <h2>Historial de Movimientos</h2>
+      <button onclick="verCompras()">Ver Compras</button>
+      <button onclick="verVentas()">Ver Ventas</button>
+      <div id="historial"></div>
+    </section>
+  </main>
 
-  <!-- Cargar el archivo JS externo -->
+  <footer>
+    <p>Inventario © 2026</p>
+  </footer>
+
   <script src="app.js"></script>
 </body>
 </html>
