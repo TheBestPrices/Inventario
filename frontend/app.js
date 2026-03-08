@@ -112,6 +112,7 @@ async function verVentas() {
     div.textContent = `Venta #${v.id} → Producto ${v.producto_id}, Cantidad: ${v.cantidad}, Precio: $${v.precio}`;
     historial.appendChild(div);
   });
+}
   // Buscar producto y mostrar en modal
 async function buscarProducto(e) {
   e.preventDefault();
