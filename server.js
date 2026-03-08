@@ -35,11 +35,12 @@ const pool = new Pool({
 
 // Registrar producto
 app.post("/productos", async (req, res) => {
-  const { nombre, categoria, precio, stock } = req.body;
+  const { nombre, categoria, descripcion, imagen_url, precio, stock } = req.body;
   try {
     const result = await pool.query(
-      "INSERT INTO productos (nombre, categoria, precio, stock) VALUES ($1, $2, $3, $4) RETURNING id",
-      [nombre, categoria, precio, stock]
+      `INSERT INTO productos (nombre, categoria, descripcion, imagen_url, precio, stock) 
+       VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
+      [nombre, categoria, descripcion, imagen_url, precio, stock]
     );
     res.json({ id: result.rows[0].id });
   } catch (err) {
