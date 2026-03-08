@@ -3,16 +3,26 @@ const API_URL = "https://inventario-reel.onrender.com"; // 👈 cambia por tu UR
 // Registrar producto
 async function registrarProducto(e) {
   e.preventDefault();
-  const producto = {
-    nombre: document.getElementById("nombre").value,
-    categoria: document.getElementById("categoria").value,
-    precio: parseFloat(document.getElementById("precio").value),
-    stock: parseInt(document.getElementById("stock").value,
-     descripcion: document.getElementById("descripcion").value,
-    imagen_url: document.getElementById("imagen_url").value)
+  const formData = new FormData();
+  formData.append("nombre", document.getElementById("nombre").value);
+  formData.append("categoria", document.getElementById("categoria").value);
+  formData.append("precio", parseFloat(document.getElementById("precio").value));
+  formData.append("stock", parseInt(document.getElementById("stock").value));
+  formData.append("descripcion", document.getElementById("descripcion").value);
 
-  };
+  const imagenFile = document.getElementById("imagen").files[0];
+  if (imagenFile) {
+    formData.append("imagen", imagenFile);
+  }
 
+  const res = await fetch(`${API_URL}/productos`, {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await res.json();
+  alert("Producto registrado con ID: " + data.id);
+}
   const res = await fetch(`${API_URL}/productos`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
