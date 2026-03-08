@@ -7,7 +7,10 @@ async function registrarProducto(e) {
     nombre: document.getElementById("nombre").value,
     categoria: document.getElementById("categoria").value,
     precio: parseFloat(document.getElementById("precio").value),
-    stock: parseInt(document.getElementById("stock").value)
+    stock: parseInt(document.getElementById("stock").value,
+     descripcion: document.getElementById("descripcion").value,
+    imagen_url: document.getElementById("imagen_url").value)
+
   };
 
   const res = await fetch(`${API_URL}/productos`, {
