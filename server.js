@@ -57,7 +57,20 @@ app.get("/productos", async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
-
+// Buscar producto por código único
+app.get("/productos/codigo/:codigo", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(
+      "SELECT * FROM productos WHERE id = $1",
+      [codigo]
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error en la búsqueda" });
+  }
+});
 // ================== INICIO SERVIDOR ==================
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
