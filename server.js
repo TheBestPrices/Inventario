@@ -38,8 +38,8 @@ app.post("/productos", async (req, res) => {
   const { nombre, categoria, descripcion, imagen_url, precio, stock, codigo} = req.body;
   try {
     const result = await pool.query(
-      `INSERT INTO productos (nombre, categoria, descripcion, imagen_url, precio, stock) 
-       VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
+      `INSERT INTO productos (nombre, categoria, descripcion, imagen_url, precio, stock, codigo) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
       [nombre, categoria, descripcion, imagen_url, precio, stock, codigo]
     );
     res.json({ id: result.rows[0].id });
