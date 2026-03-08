@@ -1,4 +1,4 @@
-const API_URL = "https://https://inventario-reel.onrender.com/"; // 👈 cambia por tu URL real
+const API_URL = "https://inventario-reel.onrender.com/"; // 👈 cambia por tu URL real
 
 // Registrar producto
 async function registrarProducto(e) {
