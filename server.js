@@ -63,7 +63,7 @@ app.get("/productos/id/:id", async (req, res) => {
   try {
     const result = await pool.query(
       "SELECT * FROM productos WHERE id = $1",
-      [codigo]
+      [id]
     );
     res.json(result.rows);
   } catch (error) {
