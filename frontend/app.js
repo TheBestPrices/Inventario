@@ -183,12 +183,41 @@ async function login(e) {
   }
 
   // Mostrar mensaje y usuario en encabezado
+// Mostrar modal al cargar
+window.onload = () => {
+  const usuarioGuardado = localStorage.getItem("usuario");
+  if (!usuarioGuardado) {
+    document.getElementById("modalLogin").style.display = "block";
+    document.querySelector("main").style.display = "none"; // ocultar inventario
+  } else {
+    document.getElementById("encabezadoUsuario").textContent = `Bienvenido, ${usuarioGuardado}`;
+    document.querySelector("main").style.display = "block";
+  }
+};
+
+async function login(e) {
+  e.preventDefault();
+  const usuario = document.getElementById("usuario").value;
+  const contrasena = document.getElementById("contrasena").value;
+
+  const res = await fetch("/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ usuario, contrasena })
+  });
+
+  const data = await res.json();
+
+  if (data.error) {
+    alert(data.error);
+    return;
+  }
+
   alert(data.mensaje);
   document.getElementById("encabezadoUsuario").textContent = `Bienvenido, ${data.usuario}`;
 
-  // Ocultar formulario de login y mostrar el resto del sistema
-  document.getElementById("loginSection").style.display = "none";
-  document.querySelector("main").style.display = "block";
-
-  // Guardar usuario en localStorage para recordarlo
+  // Guardar usuario y cerrar modal
   localStorage.setItem("usuario", data.usuario);
+  document.getElementById("modalLogin").style.display = "none";
+  document.querySelector("main").style.display = "block";
+}
