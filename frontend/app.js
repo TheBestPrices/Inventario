@@ -164,4 +164,31 @@ async function buscarProducto(e) {
 function cerrarModal() {
   document.getElementById("modalProducto").style.display = "none";
 }
+async function login(e) {
+  e.preventDefault();
+  const usuario = document.getElementById("usuario").value;
+  const contrasena = document.getElementById("contrasena").value;
 
+  const res = await fetch("/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ usuario, contrasena })
+  });
+
+  const data = await res.json();
+
+  if (data.error) {
+    alert(data.error);
+    return;
+  }
+
+  // Mostrar mensaje y usuario en encabezado
+  alert(data.mensaje);
+  document.getElementById("encabezadoUsuario").textContent = `Bienvenido, ${data.usuario}`;
+
+  // Ocultar formulario de login y mostrar el resto del sistema
+  document.getElementById("loginSection").style.display = "none";
+  document.querySelector("main").style.display = "block";
+
+  // Guardar usuario en localStorage para recordarlo
+  localStorage.setItem("usuario", data.usuario);
