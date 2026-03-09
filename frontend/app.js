@@ -23,7 +23,7 @@ async function registrarProducto(e) {
   });
 
   const data = await res.json();
-  alert("Producto registrado con ID: " + data.id);
+  alert("Producto registrado:" + data.nombre);
 }
 
 // Registrar compra
@@ -42,7 +42,7 @@ async function registrarCompra(e) {
   });
 
   const data = await res.json();
-  alert("Compra registrada con ID: " + data.id);
+  alert("Compra registrada: " + data.nombre);
 }
 
 // Registrar venta
@@ -61,7 +61,7 @@ async function registrarVenta(e) {
   });
 
   const data = await res.json();
-  alert("Venta registrada con ID: " + data.id);
+  alert("Venta registrada: " + data.nombre);
 }
 
 // Listar productos
@@ -119,7 +119,7 @@ async function buscarProducto(e) {
   const query = document.getElementById("buscar_codigo").value.trim();
 
   if (!query) {
-    alert("Escribe un ID o código para buscar.");
+    alert("Escribe un código para buscar.");
     return;
   }
 
