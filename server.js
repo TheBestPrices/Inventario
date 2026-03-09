@@ -28,30 +28,6 @@ const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_KEY
 );
-// ================== LOGIN ==================
-app.post("/login", async (req, res) => {
-  const { usuario, contrasena } = req.body;
-
-  try {
-    const result = await pool.query("SELECT * FROM login WHERE usuario=$1", [usuario]);
-
-    if (result.rows.length === 0) {
-      return res.status(400).json({ error: "Usuario no encontrado" });
-    }
-
-    const user = result.rows[0];
-
-    if (contrasena !== user.contrasena) {
-      return res.status(400).json({ error: "Contraseña incorrecta" });
-    }
-
-    // Si todo está correcto
-    res.json({ mensaje: "Login exitoso", usuario: user.usuario });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error en el servidor" });
-  }
-});
 // Crear tablas si no existen
 (async () => {
   await pool.query(`
@@ -73,7 +49,7 @@ app.post("/login", async (req, res) => {
 // Registrar producto con foto (ahora en Supabase Storage)
 app.post("/productos", upload.single("imagen"), async (req, res) => {
   try {
-    const { nombre, categoria, descripcion, precio, stock, codigo } = req.body;
+    const { nombre, categoria,descripcion, precio, stock, codigo } = req.body;
     let imagen_url = null;
 
     if (req.file) {
