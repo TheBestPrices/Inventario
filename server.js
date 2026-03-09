@@ -98,7 +98,7 @@ app.get("/productos", async (req, res) => {
 app.get("/productos/codigo/:codigo", async (req, res) => {
   const { codigo } = req.params;
   try {
-    const result = await pool.query("SELECT * FROM productos WHERE codigo = $1", [id]);
+    const result = await pool.query("SELECT * FROM productos WHERE codigo = $1", [codigo]);
     res.json(result.rows);
   } catch (error) {
     console.error(error);
