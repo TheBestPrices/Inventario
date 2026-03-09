@@ -52,16 +52,26 @@ const pool = new Pool({
 // ================== RUTAS ==================
 
 // Registrar producto con foto
+// Registrar producto con foto
 app.post("/productos", upload.single("imagen"), async (req, res) => {
-  const { nombre, categoria, descripcion, precio, stock, codigo } = req.body;
-  const imagen_url = req.file ? `/uploads/${req.file.filename}` : null;
-
   try {
+    const { nombre, categoria, descripcion, precio, stock, codigo } = req.body;
+    const imagen_url = req.file ? `/uploads/${req.file.filename}` : null;
+
     const result = await pool.query(
       `INSERT INTO productos (nombre, categoria, descripcion, imagen_url, precio, stock, codigo) 
        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
-      [nombre, categoria, descripcion, imagen_url, precio, stock, codigo]
+      [
+        nombre,
+        categoria,
+        descripcion,
+        imagen_url,
+        parseFloat(precio),   // 👈 convierte a número
+        parseInt(stock),      // 👈 convierte a número
+        codigo
+      ]
     );
+
     res.json({ id: result.rows[0].id });
   } catch (err) {
     console.error(err);
