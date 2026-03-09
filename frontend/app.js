@@ -23,7 +23,7 @@ async function registrarProducto(e) {
   });
 
   const data = await res.json();
-  alert("Producto registrado:" + data.nombre);
+ alert("Producto registrado: " + data.nombre);
 }
 
 // Registrar compra
