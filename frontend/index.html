@@ -11,14 +11,17 @@
     <h1>📦 Gestor de Inventario</h1>
   </header>
   <!-- Formulario de login -->
-<section id="loginSection">
-  <h2>Iniciar Sesión</h2>
-  <form onsubmit="login(event)">
-    <input type="text" id="usuario" placeholder="Usuario" required>
-    <input type="password" id="contrasena" placeholder="Contraseña" required>
-    <button type="submit">Ingresar</button>
-  </form>
-</section>
+<!-- Modal de Login -->
+<div id="modalLogin" class="modal">
+  <div class="modal-contenido">
+    <h2>Iniciar Sesión</h2>
+    <form onsubmit="login(event)">
+      <input type="text" id="usuario" placeholder="Usuario" required>
+      <input type="password" id="contrasena" placeholder="Contraseña" required>
+      <button type="submit">Ingresar</button>
+    </form>
+  </div>
+</div>
 
 <section class="busqueda">
   <form onsubmit="buscarProducto(event)">
@@ -104,4 +107,5 @@
 </body>
 
 </html>
+
 
