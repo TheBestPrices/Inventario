@@ -3,6 +3,7 @@ const { Pool } = require("pg");
 const cors = require("cors");
 const path = require("path");
 const multer = require("multer");
+const { createClient } = require("@supabase/supabase-js");
 
 const app = express();
 
@@ -13,63 +14,67 @@ app.use(express.json());
 // 👉 Servir frontend (index.html, CSS, JS)
 app.use(express.static(path.join(__dirname, "frontend")));
 
-// 👉 Servir imágenes subidas
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+// Configuración de multer (memoria en vez de disco)
+const upload = multer({ storage: multer.memoryStorage() });
 
-// Configuración de multer
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "uploads"));
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  }
-});
-const upload = multer({ storage });
-
-// Conexión a Supabase
+// Conexión a Postgres (Supabase DB)
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
 });
 
-// Crear tablas si no existen (ajustado a tu estructura real)
+// Conexión a Supabase Storage
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_KEY
+);
+
+// Crear tablas si no existen
 (async () => {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS productos (
       id SERIAL PRIMARY KEY,
       nombre TEXT,
       categoria TEXT,
-       precio REAL,
+      precio REAL,
       stock INTEGER,
       descripcion TEXT,
       imagen_url TEXT,
-      codigo TEXT     
+      codigo TEXT
     )
   `);
 })();
 
 // ================== RUTAS ==================
 
-// Registrar producto con foto
-// Registrar producto con foto
+// Registrar producto con foto (ahora en Supabase Storage)
 app.post("/productos", upload.single("imagen"), async (req, res) => {
   try {
     const { nombre, categoria, descripcion, precio, stock, codigo } = req.body;
-    const imagen_url = req.file ? `/uploads/${req.file.filename}` : null;
+    let imagen_url = null;
+
+    if (req.file) {
+      // Subir archivo a Supabase Storage
+      const { data, error } = await supabase.storage
+        .from("imagenes") // 👈 bucket creado en Supabase
+        .upload(`productos/${Date.now()}-${req.file.originalname}`, req.file.buffer, {
+          contentType: req.file.mimetype
+        });
+
+      if (error) throw error;
+
+      // Obtener URL pública
+      const { data: publicUrl } = supabase.storage
+        .from("imagenes")
+        .getPublicUrl(data.path);
+
+      imagen_url = publicUrl.publicUrl;
+    }
 
     const result = await pool.query(
       `INSERT INTO productos (nombre, categoria, descripcion, imagen_url, precio, stock, codigo) 
        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
-      [
-        nombre,
-        categoria,
-        descripcion,
-        imagen_url,
-        parseFloat(precio),   // 👈 convierte a número
-        parseInt(stock),      // 👈 convierte a número
-        codigo
-      ]
+      [nombre, categoria, descripcion, imagen_url, parseFloat(precio), parseInt(stock), codigo]
     );
 
     res.json({ id: result.rows[0].id });
