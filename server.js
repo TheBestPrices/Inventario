@@ -94,11 +94,11 @@ app.get("/productos", async (req, res) => {
   }
 });
 
-// Buscar producto por ID
-app.get("/productos/id/:id", async (req, res) => {
+// Buscar producto por Codigo
+app.get("/productos/codigo/:codigo", async (req, res) => {
   const { id } = req.params;
   try {
-    const result = await pool.query("SELECT * FROM productos WHERE id = $1", [id]);
+    const result = await pool.query("SELECT * FROM productos WHERE codigo = $1", [id]);
     res.json(result.rows);
   } catch (error) {
     console.error(error);
