@@ -40,11 +40,11 @@ const pool = new Pool({
       id SERIAL PRIMARY KEY,
       nombre TEXT,
       categoria TEXT,
+       precio REAL,
+      stock INTEGER,
       descripcion TEXT,
       imagen_url TEXT,
-      codigo TEXT,
-      precio REAL,
-      stock INTEGER
+      codigo TEXT     
     )
   `);
 })();
