@@ -164,20 +164,4 @@ async function buscarProducto(e) {
 function cerrarModal() {
   document.getElementById("modalProducto").style.display = "none";
 }
-async function login(e) {
-  e.preventDefault();
-  const usuario = document.getElementById("usuario").value;
-  const contrasena = document.getElementById("contrasena").value;
 
-  const res = await fetch("/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ usuario, contrasena })
-  });
-
-  const data = await res.json();
-
-  if (data.error) {
-    alert(data.error);
-    return;
-  }
