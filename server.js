@@ -28,6 +28,7 @@ const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_KEY
 );
+
 // Crear tablas si no existen
 (async () => {
   await pool.query(`
@@ -40,29 +41,41 @@ const supabase = createClient(
       descripcion TEXT,
       imagen_url TEXT,
       codigo TEXT
-    )
+    );
+    CREATE TABLE IF NOT EXISTS compras (
+      id SERIAL PRIMARY KEY,
+      producto_id INTEGER,
+      cantidad INTEGER,
+      costo REAL,
+      fecha TIMESTAMP DEFAULT NOW()
+    );
+    CREATE TABLE IF NOT EXISTS ventas (
+      id SERIAL PRIMARY KEY,
+      producto_id INTEGER,
+      cantidad INTEGER,
+      precio REAL,
+      fecha TIMESTAMP DEFAULT NOW()
+    );
   `);
 })();
 
 // ================== RUTAS ==================
 
-// Registrar producto con foto (ahora en Supabase Storage)
+// Registrar producto con foto
 app.post("/productos", upload.single("imagen"), async (req, res) => {
   try {
-    const { nombre, categoria,descripcion, precio, stock, codigo } = req.body;
+    const { nombre, categoria, descripcion, precio, stock, codigo } = req.body;
     let imagen_url = null;
 
     if (req.file) {
-      // Subir archivo a Supabase Storage
       const { data, error } = await supabase.storage
-        .from("imagenes") // 👈 bucket creado en Supabase
+        .from("imagenes")
         .upload(`productos/${Date.now()}-${req.file.originalname}`, req.file.buffer, {
           contentType: req.file.mimetype
         });
 
       if (error) throw error;
 
-      // Obtener URL pública
       const { data: publicUrl } = supabase.storage
         .from("imagenes")
         .getPublicUrl(data.path);
@@ -72,11 +85,11 @@ app.post("/productos", upload.single("imagen"), async (req, res) => {
 
     const result = await pool.query(
       `INSERT INTO productos (nombre, categoria, descripcion, imagen_url, precio, stock, codigo) 
-       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
+       VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
       [nombre, categoria, descripcion, imagen_url, parseFloat(precio), parseInt(stock), codigo]
     );
 
-    res.json({ id: result.rows[0].id });
+    res.json(result.rows[0]);
   } catch (err) {
     console.error(err);
     res.status(400).json({ error: err.message });
@@ -93,15 +106,73 @@ app.get("/productos", async (req, res) => {
   }
 });
 
-// Buscar producto por Codigo
+// Buscar producto por código
 app.get("/productos/codigo/:codigo", async (req, res) => {
   const { codigo } = req.params;
   try {
-    const result = await pool.query("SELECT * FROM productos WHERE codigo = $1", [codigo]);
+    const result = await pool.query("SELECT * FROM productos WHERE codigo=$1", [codigo]);
     res.json(result.rows);
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
     res.status(500).json({ error: "Error en la búsqueda" });
+  }
+});
+
+// Buscar producto por ID
+app.get("/productos/id/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query("SELECT * FROM productos WHERE id=$1", [id]);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: "Error en la búsqueda por ID" });
+  }
+});
+
+// Registrar compra
+app.post("/compras", async (req, res) => {
+  const { producto_id, cantidad, costo } = req.body;
+  try {
+    const result = await pool.query(
+      `INSERT INTO compras (producto_id, cantidad, costo) VALUES ($1,$2,$3) RETURNING *`,
+      [producto_id, cantidad, costo]
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Registrar venta
+app.post("/ventas", async (req, res) => {
+  const { producto_id, cantidad, precio } = req.body;
+  try {
+    const result = await pool.query(
+      `INSERT INTO ventas (producto_id, cantidad, precio) VALUES ($1,$2,$3) RETURNING *`,
+      [producto_id, cantidad, precio]
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Listar compras
+app.get("/compras", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM compras ORDER BY fecha DESC");
+    res.json(result.rows);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Listar ventas
+app.get("/ventas", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM ventas ORDER BY fecha DESC");
+    res.json(result.rows);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 
