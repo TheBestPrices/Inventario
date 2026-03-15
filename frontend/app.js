@@ -36,9 +36,15 @@ async function login(e) {
 function logout() {
   localStorage.removeItem("usuario");
   document.querySelector("main").style.display = "none";
-  document.getElementById("modalLogin").style.display = "block";
   document.getElementById("encabezadoUsuario").textContent = "";
   document.getElementById("btnLogout").style.display = "none";
+
+  // Mostrar solo el login
+  document.getElementById("modalLogin").style.display = "block";
+
+  // Cerrar cualquier otro modal
+  document.getElementById("modalProducto").classList.remove("show");
+  document.getElementById("modalVenta").classList.remove("show");
 }
 
 window.onload = () => {
@@ -166,11 +172,11 @@ async function verVentas() {
 
 // ================== MODALES ==================
 function cerrarModalProducto() {
-  document.getElementById("modalProducto").style.display = "none";
+  document.getElementById("modalProducto").classList.remove("show");
 }
 
 function cerrarModalVenta() {
-  document.getElementById("modalVenta").style.display = "none";
+  document.getElementById("modalVenta").classList.remove("show");
 }
 
 // ================== BUSCAR PRODUCTO ==================
@@ -185,7 +191,6 @@ async function buscarProducto(e) {
 
   let url;
   if (!isNaN(query)) {
-    // 👇 Ajusta según tu backend: algunos usan /productos/:id
     url = `${API_URL}/productos/${query}`;
   } else {
     url = `${API_URL}/productos/codigo/${query}`;
@@ -195,7 +200,6 @@ async function buscarProducto(e) {
     const res = await fetch(url);
     const data = await res.json();
 
-    // Normalizar: si es objeto, convertir en array
     const productos = Array.isArray(data) ? data : [data];
 
     if (!productos[0]) {
@@ -218,12 +222,12 @@ async function buscarProducto(e) {
       ${p.imagen_url ? `<img src="${p.imagen_url}" alt="${p.nombre}" style="max-width:100%;">` : ""}
     `;
 
-    document.getElementById("modalProducto").style.display = "block";
+    document.getElementById("modalProducto").classList.add("show");
 
     document.getElementById("btnVender").onclick = () => {
       document.getElementById("ventaProducto").textContent =
         `Producto: ${p.nombre} (Stock: ${p.stock})`;
-      document.getElementById("modalVenta").style.display = "block";
+      document.getElementById("modalVenta").classList.add("show");
     };
   } catch (error) {
     console.error(error);
