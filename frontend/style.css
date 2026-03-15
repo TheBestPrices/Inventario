@@ -97,11 +97,13 @@ main {
   left: 0; top: 0;
   width: 100%; height: 100%;
   background-color: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #modalLogin .modal-contenido {
   background-color: #fff;
-  margin: 12% auto;
   padding: 2rem;
   border-radius: 10px;
   width: 90%;
@@ -157,17 +159,21 @@ main {
 
 /* ===== Modales de producto y venta ===== */
 .modal {
-  display: none;
+  display: none; /* oculto por defecto */
   position: fixed;
   z-index: 2000;
   left: 0; top: 0;
   width: 100%; height: 100%;
   background-color: rgba(0,0,0,0.6);
 
-  /* 👇 centrado con flexbox */
-  display: flex;
+  /* centrado con flexbox */
   align-items: center;
   justify-content: center;
+}
+
+/* Clase que se activa desde JS */
+.modal.show {
+  display: flex;
 }
 
 .modal-contenido {
@@ -179,7 +185,6 @@ main {
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   text-align: center;
 
-  /* 👇 evitar que se salga en pantallas grandes o pequeñas */
   max-height: 90vh;
   overflow-y: auto;
 }
