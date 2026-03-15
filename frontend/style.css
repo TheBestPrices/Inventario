@@ -20,7 +20,7 @@
 }
 
 /* ===== Modales de producto y venta ===== */
-.modal {
+.modal-flex {
   display: none; /* oculto por defecto */
   position: fixed;
   z-index: 2000;
@@ -32,11 +32,11 @@
   justify-content: center;
 }
 
-.modal.show {
+.modal-flex.show {
   display: flex; /* se activa desde JS */
 }
 
-.modal-contenido {
+.modal-flex .modal-contenido {
   background-color: #fff;
   padding: 2rem;
   border-radius: 10px;
