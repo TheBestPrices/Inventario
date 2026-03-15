@@ -19,6 +19,31 @@ header h1 {
   font-size: 1.8rem;
 }
 
+#btnLogout, #btnCompra {
+  margin: 10px 5px;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+#btnLogout {
+  background: #e74c3c;
+  color: #fff;
+}
+#btnLogout:hover {
+  background: #c0392b;
+}
+
+#btnCompra {
+  background: #27ae60;
+  color: #fff;
+}
+#btnCompra:hover {
+  background: #1e8449;
+}
+
 /* ===== Sección de búsqueda ===== */
 .busqueda {
   background: #ecf0f1;
@@ -89,9 +114,9 @@ main {
   background: #1e8449;
 }
 
-/* ===== Modal de Login ===== */
-#modalLogin {
-  display: none; /* oculto por defecto */
+/* ===== Modales (Login, Producto, Venta, Compra) ===== */
+.modal {
+  display: none;
   position: fixed;
   z-index: 2000;
   left: 0; top: 0;
@@ -99,7 +124,7 @@ main {
   background-color: rgba(0,0,0,0.6);
 }
 
-#modalLogin .modal-contenido {
+.modal-contenido {
   background-color: #fff;
   margin: 12% auto;
   padding: 2rem;
@@ -110,12 +135,12 @@ main {
   text-align: center;
 }
 
-#modalLogin h2 {
+.modal-contenido h2 {
   margin-top: 0;
   color: #2c3e50;
 }
 
-#modalLogin input {
+.modal-contenido input {
   width: 100%;
   padding: 0.9rem;
   margin: 0.6rem 0;
@@ -124,35 +149,28 @@ main {
   font-size: 1rem;
 }
 
-#modalLogin button {
-  width: 100%;
-  padding: 0.9rem;
-  background: #3498db;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-#modalLogin button:hover {
-  background: #2980b9;
-}
-
-/* ===== Botón de logout ===== */
-#btnLogout {
+.modal-contenido button {
   margin-top: 10px;
-  padding: 6px 12px;
-  background: #e74c3c;
-  color: #fff;
+  padding: 0.8rem;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 0.9rem;
 }
 
-#btnLogout:hover {
-  background: #c0392b;
+/* Botón vender */
+#btnVender {
+  background: #27ae60;
+  color: #fff;
+}
+#btnVender:hover {
+  background: #1e8449;
+}
+
+/* Botón cerrar (X) */
+.cerrar {
+  float: right;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
 /* ===== Footer ===== */
