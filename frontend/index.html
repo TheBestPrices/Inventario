@@ -11,8 +11,6 @@
     <h1>📦 Gestor de Inventario</h1>
     <div id="encabezadoUsuario"></div>
     <button onclick="logout()" id="btnLogout" style="display:none;">Cerrar sesión</button>
-    <!-- Botón para abrir modal de compras -->
-    <button onclick="abrirModalCompra()" id="btnCompra">Registrar Compra</button>
   </header>
 
   <!-- Modal de Login -->
@@ -81,39 +79,5 @@
   </footer>
 
   <script src="app.js"></script>
-
-  <!-- Modal de producto -->
-  <div id="modalProducto" class="modal">
-    <div class="modal-contenido">
-      <span class="cerrar" onclick="cerrarModalProducto()">&times;</span>
-      <div id="detalleProducto"></div>
-      <button id="btnVender">Vender</button>
-    </div>
-  </div>
-
-  <!-- Modal de venta -->
-  <div id="modalVenta" class="modal">
-    <div class="modal-contenido">
-      <h2>Registrar Venta</h2>
-      <p id="ventaProducto"></p>
-      <input type="number" id="cantidadVenta" placeholder="Cantidad a vender">
-      <button onclick="registrarVenta()">Confirmar Venta</button>
-      <button onclick="cerrarModalVenta()">Cancelar</button>
-    </div>
-  </div>
-
-  <!-- Modal de compra -->
-  <div id="modalCompra" class="modal">
-    <div class="modal-contenido">
-      <span class="cerrar" onclick="cerrarModalCompra()">&times;</span>
-      <h2>Registrar Compra</h2>
-      <form onsubmit="registrarCompra(event)">
-        <input type="number" id="compra_producto_id" placeholder="ID del producto" required>
-        <input type="number" id="compra_cantidad" placeholder="Cantidad" required>
-        <input type="number" id="compra_costo" placeholder="Costo total" required>
-        <button type="submit">Registrar Compra</button>
-      </form>
-    </div>
-  </div>
 </body>
 </html>
