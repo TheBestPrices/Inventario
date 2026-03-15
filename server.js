@@ -175,6 +175,25 @@ app.get("/ventas", async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+// Ruta de login
+app.post("/login", async (req, res) => {
+  const { usuario, contrasena } = req.body;
+  try {
+    const result = await pool.query(
+      "SELECT * FROM usuarios WHERE usuario=$1 AND contrasena=$2",
+      [usuario, contrasena]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(401).json({ error: "Credenciales incorrectas" });
+    }
+
+    res.json({ mensaje: "Login exitoso", usuario: result.rows[0].usuario });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error en el servidor" });
+  }
+});
 
 // ================== INICIO SERVIDOR ==================
 const PORT = process.env.PORT || 3000;
