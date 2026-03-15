@@ -1,3 +1,94 @@
+/* ===== Reset básico ===== */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f6f8;
+  color: #333;
+}
+
+/* ===== Encabezado ===== */
+header {
+  background: #3498db;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+/* ===== Sección de búsqueda ===== */
+.busqueda {
+  background: #ecf0f1;
+  padding: 1rem;
+  text-align: center;
+}
+
+.busqueda input {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 60%;
+  max-width: 300px;
+}
+
+.busqueda button {
+  padding: 0.6rem 1rem;
+  margin-left: 0.5rem;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.busqueda button:hover {
+  background: #2980b9;
+}
+
+/* ===== Cards principales ===== */
+main {
+  display: none; /* se mostrará solo después del login */
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.card form input,
+.card form button {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.card form button {
+  background: #27ae60;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.card form button:hover {
+  background: #1e8449;
+}
+
 /* ===== Modal de Login ===== */
 #modalLogin {
   display: none; /* oculto por defecto */
@@ -17,6 +108,51 @@
   max-width: 400px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   text-align: center;
+}
+
+#modalLogin h2 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+#modalLogin input {
+  width: 100%;
+  padding: 0.9rem;
+  margin: 0.6rem 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+#modalLogin button {
+  width: 100%;
+  padding: 0.9rem;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+#modalLogin button:hover {
+  background: #2980b9;
+}
+
+/* ===== Botón de logout ===== */
+#btnLogout {
+  margin-top: 10px;
+  padding: 6px 12px;
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+#btnLogout:hover {
+  background: #c0392b;
 }
 
 /* ===== Modales de producto y venta ===== */
@@ -47,4 +183,32 @@
 
   max-height: 90vh;
   overflow-y: auto;
+}
+
+.cerrar {
+  float: right;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+#btnVender {
+  background: #27ae60;
+  color: #fff;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#btnVender:hover {
+  background: #1e8449;
+}
+
+/* ===== Footer ===== */
+footer {
+  background: #2c3e50;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
 }
