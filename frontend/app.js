@@ -79,13 +79,6 @@ async function registrarProducto(e) {
 }
 
 // ================== COMPRAS ==================
-function abrirModalCompra() {
-  document.getElementById("modalCompra").style.display = "block";
-}
-function cerrarModalCompra() {
-  document.getElementById("modalCompra").style.display = "none";
-}
-
 async function registrarCompra(e) {
   e.preventDefault();
   const compra = {
@@ -102,24 +95,15 @@ async function registrarCompra(e) {
 
   const data = await res.json();
   alert("Compra registrada: " + data.id);
-  cerrarModalCompra();
 }
 
 // ================== VENTAS ==================
-function cerrarModalVenta() {
-  document.getElementById("modalVenta").style.display = "none";
-}
-function cerrarModalProducto() {
-  document.getElementById("modalProducto").style.display = "none";
-}
-
-async function registrarVenta() {
-  const cantidad = parseInt(document.getElementById("cantidadVenta").value);
-
+async function registrarVenta(e) {
+  e.preventDefault();
   const venta = {
-    producto_id: window.productoActual.id,
-    cantidad: cantidad,
-    precio: window.productoActual.precio
+    producto_id: parseInt(document.getElementById("venta_producto_id").value),
+    cantidad: parseInt(document.getElementById("venta_cantidad").value),
+    precio: parseFloat(document.getElementById("venta_precio").value)
   };
 
   const res = await fetch(`${API_URL}/ventas`, {
@@ -130,8 +114,6 @@ async function registrarVenta() {
 
   const data = await res.json();
   alert("Venta registrada: " + data.id);
-  cerrarModalVenta();
-  cerrarModalProducto();
 }
 
 // ================== LISTAR PRODUCTOS ==================
@@ -209,9 +191,7 @@ async function buscarProducto(e) {
     }
 
     const p = productos[0];
-    window.productoActual = p; // guardar producto actual
-
-    const detalle = document.getElementById("detalleProducto");
+    const detalle = document.getElementById("resultado");
     detalle.innerHTML = `
       <h2>${p.nombre}</h2>
       <p><strong>Categoría:</strong> ${p.categoria}</p>
@@ -222,11 +202,8 @@ async function buscarProducto(e) {
       <p><strong>Código:</strong> ${p.codigo}</p>
       ${p.imagen_url ? `<img src="${p.imagen_url}" alt="${p.nombre}" style="max-width:100%;">` : ""}
     `;
-
-    document.getElementById("modalProducto").style.display = "block";
-
-    // Configurar botón vender
-    document.getElementById("btnVender").onclick = () => {
-      document.getElementById("ventaProducto").textContent =
-        `Producto: ${p.nombre} (Stock: ${p.stock})`;
-      document.getElementById("modalVenta").style.display = "block";
+  } catch (error) {
+    console.error(error);
+    alert("Error al buscar el producto.");
+  }
+}
