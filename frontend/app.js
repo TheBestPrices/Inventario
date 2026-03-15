@@ -1,6 +1,59 @@
 const API_URL = "https://inventario-reel.onrender.com"; // 👈 cambia por tu URL real
 
-// Registrar producto
+// ================== LOGIN ==================
+async function login(e) {
+  e.preventDefault();
+  const usuario = document.getElementById("usuario").value;
+  const contrasena = document.getElementById("contrasena").value;
+
+  try {
+    const res = await fetch(`${API_URL}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ usuario, contrasena })
+    });
+
+    const data = await res.json();
+
+    if (data.error) {
+      alert(data.error);
+      return;
+    }
+
+    alert(data.mensaje);
+    document.getElementById("modalLogin").style.display = "none";
+    document.querySelector("main").style.display = "grid";
+    document.getElementById("encabezadoUsuario").textContent = `Bienvenido, ${data.usuario}`;
+    document.getElementById("btnLogout").style.display = "inline-block";
+
+    localStorage.setItem("usuario", data.usuario);
+  } catch (err) {
+    console.error(err);
+    alert("Error al intentar iniciar sesión.");
+  }
+}
+
+function logout() {
+  localStorage.removeItem("usuario");
+  document.querySelector("main").style.display = "none";
+  document.getElementById("modalLogin").style.display = "block";
+  document.getElementById("encabezadoUsuario").textContent = "";
+  document.getElementById("btnLogout").style.display = "none";
+}
+
+window.onload = () => {
+  const usuarioGuardado = localStorage.getItem("usuario");
+  if (!usuarioGuardado) {
+    document.getElementById("modalLogin").style.display = "block";
+    document.querySelector("main").style.display = "none";
+  } else {
+    document.querySelector("main").style.display = "grid";
+    document.getElementById("encabezadoUsuario").textContent = `Bienvenido, ${usuarioGuardado}`;
+    document.getElementById("btnLogout").style.display = "inline-block";
+  }
+};
+
+// ================== PRODUCTOS ==================
 // Registrar producto con foto
 async function registrarProducto(e) {
   e.preventDefault();
@@ -23,10 +76,10 @@ async function registrarProducto(e) {
   });
 
   const data = await res.json();
- alert("Producto registrado: " + data.nombre);
+  alert("Producto registrado: " + data.nombre);
 }
 
-// Registrar compra
+// ================== COMPRAS ==================
 async function registrarCompra(e) {
   e.preventDefault();
   const compra = {
@@ -42,10 +95,10 @@ async function registrarCompra(e) {
   });
 
   const data = await res.json();
-  alert("Compra registrada: " + data.nombre);
+  alert("Compra registrada: " + data.id);
 }
 
-// Registrar venta
+// ================== VENTAS ==================
 async function registrarVenta(e) {
   e.preventDefault();
   const venta = {
@@ -61,11 +114,10 @@ async function registrarVenta(e) {
   });
 
   const data = await res.json();
-  alert("Venta registrada: " + data.nombre);
+  alert("Venta registrada: " + data.id);
 }
 
-// Listar productos
-// Listar productos con imagen y descripción
+// ================== LISTAR PRODUCTOS ==================
 async function listarProductos() {
   const res = await fetch(`${API_URL}/productos`);
   const productos = await res.json();
@@ -86,7 +138,7 @@ async function listarProductos() {
   });
 }
 
-// Historial de compras
+// ================== HISTORIAL ==================
 async function verCompras() {
   const res = await fetch(`${API_URL}/compras`);
   const compras = await res.json();
@@ -100,7 +152,6 @@ async function verCompras() {
   });
 }
 
-// Historial de ventas
 async function verVentas() {
   const res = await fetch(`${API_URL}/ventas`);
   const ventas = await res.json();
@@ -113,7 +164,8 @@ async function verVentas() {
     historial.appendChild(div);
   });
 }
-  // Buscar producto y mostrar en modal
+
+// ================== BUSCAR PRODUCTO ==================
 async function buscarProducto(e) {
   e.preventDefault();
   const query = document.getElementById("buscar_codigo").value.trim();
@@ -123,7 +175,6 @@ async function buscarProducto(e) {
     return;
   }
 
-  // Si es número, busca por ID; si es texto, busca por código
   let url;
   if (!isNaN(query)) {
     url = `${API_URL}/productos/id/${query}`;
@@ -153,7 +204,6 @@ async function buscarProducto(e) {
       ${p.imagen_url ? `<img src="${p.imagen_url}" alt="${p.nombre}" style="max-width:100%;">` : ""}
     `;
 
-    // Mostrar modal
     document.getElementById("modalProducto").style.display = "block";
   } catch (error) {
     console.error(error);
@@ -164,4 +214,3 @@ async function buscarProducto(e) {
 function cerrarModal() {
   document.getElementById("modalProducto").style.display = "none";
 }
-
