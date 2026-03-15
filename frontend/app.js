@@ -164,6 +164,15 @@ async function verVentas() {
   });
 }
 
+// ================== MODALES ==================
+function cerrarModalProducto() {
+  document.getElementById("modalProducto").style.display = "none";
+}
+
+function cerrarModalVenta() {
+  document.getElementById("modalVenta").style.display = "none";
+}
+
 // ================== BUSCAR PRODUCTO ==================
 async function buscarProducto(e) {
   e.preventDefault();
@@ -176,22 +185,28 @@ async function buscarProducto(e) {
 
   let url;
   if (!isNaN(query)) {
-    url = `${API_URL}/productos/id/${query}`;
+    // 👇 Ajusta según tu backend: algunos usan /productos/:id
+    url = `${API_URL}/productos/${query}`;
   } else {
     url = `${API_URL}/productos/codigo/${query}`;
   }
 
   try {
     const res = await fetch(url);
-    const productos = await res.json();
+    const data = await res.json();
 
-    if (productos.length === 0) {
+    // Normalizar: si es objeto, convertir en array
+    const productos = Array.isArray(data) ? data : [data];
+
+    if (!productos[0]) {
       alert("No se encontró ningún producto.");
       return;
     }
 
     const p = productos[0];
-    const detalle = document.getElementById("resultado");
+    window.productoActual = p;
+
+    const detalle = document.getElementById("detalleProducto");
     detalle.innerHTML = `
       <h2>${p.nombre}</h2>
       <p><strong>Categoría:</strong> ${p.categoria}</p>
@@ -202,6 +217,14 @@ async function buscarProducto(e) {
       <p><strong>Código:</strong> ${p.codigo}</p>
       ${p.imagen_url ? `<img src="${p.imagen_url}" alt="${p.nombre}" style="max-width:100%;">` : ""}
     `;
+
+    document.getElementById("modalProducto").style.display = "block";
+
+    document.getElementById("btnVender").onclick = () => {
+      document.getElementById("ventaProducto").textContent =
+        `Producto: ${p.nombre} (Stock: ${p.stock})`;
+      document.getElementById("modalVenta").style.display = "block";
+    };
   } catch (error) {
     console.error(error);
     alert("Error al buscar el producto.");
