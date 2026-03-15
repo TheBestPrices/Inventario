@@ -9,14 +9,30 @@
 <body>
   <header>
     <h1>📦 Gestor de Inventario</h1>
+    <div id="encabezadoUsuario"></div>
+    <button onclick="logout()" id="btnLogout" style="display:none;">Cerrar sesión</button>
   </header>
-<section class="busqueda">
-  <form onsubmit="buscarProducto(event)">
-    <input type="text" id="buscar_codigo" placeholder="Buscar por código o nombre">
-    <button type="submit" class="lupa">🔍</button>
-  </form>
-  <div id="resultado"></div>
-</section>
+
+  <!-- Modal de Login -->
+  <div id="modalLogin" class="modal">
+    <div class="modal-contenido">
+      <h2>Iniciar Sesión</h2>
+      <form onsubmit="login(event)">
+        <input type="text" id="usuario" placeholder="Usuario" required>
+        <input type="password" id="contrasena" placeholder="Contraseña" required>
+        <button type="submit">Ingresar</button>
+      </form>
+    </div>
+  </div>
+
+  <section class="busqueda">
+    <form onsubmit="buscarProducto(event)">
+      <input type="text" id="buscar_codigo" placeholder="Buscar por código o nombre">
+      <button type="submit" class="lupa">🔍</button>
+    </form>
+    <div id="resultado"></div>
+  </section>
+
   <main>
     <!-- Registrar Producto -->
     <section class="card">
@@ -84,16 +100,13 @@
   </footer>
 
   <script src="app.js"></script>
+
   <!-- Modal de producto -->
-<div id="modalProducto" class="modal">
-  <div class="modal-contenido">
-    <span class="cerrar" onclick="cerrarModal()">&times;</span>
-    <div id="detalleProducto"></div>
+  <div id="modalProducto" class="modal">
+    <div class="modal-contenido">
+      <span class="cerrar" onclick="cerrarModal()">&times;</span>
+      <div id="detalleProducto"></div>
+    </div>
   </div>
-</div>
 </body>
-
 </html>
-
-
-
