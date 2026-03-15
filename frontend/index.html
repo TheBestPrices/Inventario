@@ -31,7 +31,6 @@
       <input type="text" id="buscar_codigo" placeholder="Buscar por código o nombre">
       <button type="submit" class="lupa">🔍</button>
     </form>
-    <div id="resultado"></div>
   </section>
 
   <main>
@@ -95,6 +94,26 @@
       <div id="historial"></div>
     </section>
   </main>
+
+  <!-- Modal de producto -->
+  <div id="modalProducto" class="modal">
+    <div class="modal-contenido">
+      <span class="cerrar" onclick="cerrarModalProducto()">&times;</span>
+      <div id="detalleProducto"></div>
+      <button id="btnVender">Vender</button>
+    </div>
+  </div>
+
+  <!-- Modal de venta -->
+  <div id="modalVenta" class="modal">
+    <div class="modal-contenido">
+      <h2>Registrar Venta</h2>
+      <p id="ventaProducto"></p>
+      <input type="number" id="cantidadVenta" placeholder="Cantidad a vender">
+      <button onclick="registrarVenta()">Confirmar Venta</button>
+      <button onclick="cerrarModalVenta()">Cancelar</button>
+    </div>
+  </div>
 
   <footer>
     <p>Inventario © 2026</p>
