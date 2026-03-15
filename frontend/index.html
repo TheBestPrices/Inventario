@@ -50,6 +50,28 @@
       </form>
     </section>
 
+    <!-- Registrar Compra -->
+    <section class="card">
+      <h2>Registrar Compra</h2>
+      <form onsubmit="registrarCompra(event)">
+        <input type="number" id="compra_producto_id" placeholder="ID del producto" required>
+        <input type="number" id="compra_cantidad" placeholder="Cantidad" required>
+        <input type="number" id="compra_costo" placeholder="Costo total" required>
+        <button type="submit">Registrar Compra</button>
+      </form>
+    </section>
+
+    <!-- Registrar Venta -->
+    <section class="card">
+      <h2>Registrar Venta</h2>
+      <form onsubmit="registrarVenta(event)">
+        <input type="number" id="venta_producto_id" placeholder="ID del producto" required>
+        <input type="number" id="venta_cantidad" placeholder="Cantidad" required>
+        <input type="number" id="venta_precio" placeholder="Precio de venta" required>
+        <button type="submit">Registrar Venta</button>
+      </form>
+    </section>
+
     <!-- Lista de Productos -->
     <section class="card">
       <h2>Lista de Productos</h2>
