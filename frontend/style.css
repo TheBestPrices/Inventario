@@ -1,192 +1,70 @@
-body {
-  font-family: "Segoe UI", Tahoma, sans-serif;
-  background: #f4f6f9;
-  margin: 0;
-  padding: 0;
-  color: #333;
-}
-
-/* Encabezado */
-header {
-  background: #2c3e50;
-  color: #fff;
-  padding: 1rem;
-  text-align: center;
-}
-
-.busqueda form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.busqueda input {
-  flex: 1;
-  max-width: 500px;   /* ancho máximo del cuadro */
-  padding: 0.8rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-.busqueda .lupa {
-  width: 32px;        /* ancho fijo */
-  height: 32px;       /* alto fijo */
-  background: #3498db;
-  color: #fff;
-  border: none;
-  border-radius: 50%; /* forma circular */
-  cursor: pointer;
-  font-size: 16px;    /* tamaño del ícono 🔍 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;         /* sin relleno extra */
-}
-
-.busqueda .lupa:hover {
-  background: #2980b9;
-}
-/* Contenedor principal con grid adaptable */
+/* Inventario oculto hasta login */
 main {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.5rem;
-  padding: 1rem;
+  display: none; /* se mostrará solo después del login */
 }
 
-/* Tarjetas generales */
-.card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 1.2rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-/* Títulos */
-h2 {
-  margin-top: 0;
-  color: #2c3e50;
-  font-size: 1.3rem;
-}
-
-/* Inputs y botones dentro de formularios */
-form input, form button {
-  display: block;
-  width: 100%;
-  margin: 0.5rem 0;
-  padding: 0.9rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-}
-
-/* Botón de formulario */
-form button {
-  background: #3498db;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-form button:hover {
-  background: #2980b9;
-}
-
-/* Botones generales */
-button {
-  margin-top: 0.5rem;
-  padding: 0.8rem 1.2rem;
-  border: none;
-  border-radius: 6px;
-  background: #27ae60;
-  color: #fff;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-button:hover {
-  background: #1e8449;
-}
-
-/* Footer */
-footer {
-  text-align: center;
-  padding: 1rem;
-  background: #2c3e50;
-  color: #fff;
-}
-
-/* Tarjeta de producto tipo catálogo */
-.producto-card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  text-align: center;
-}
-
-.producto-card h3 {
-  margin: 0.5rem 0;
-  color: #2c3e50;
-}
-
-.producto-card p {
-  margin: 0.3rem 0;
-  font-size: 0.95rem;
-}
-
-.producto-card img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-top: 0.5rem;
-}
-
-/* Responsive extra para pantallas pequeñas */
-@media (max-width: 480px) {
-  h2 {
-    font-size: 1.1rem;
-  }
-  form input, form button, button {
-    font-size: 0.95rem;
-    padding: 0.8rem;
-  }
-}
-.modal {
+/* Modal de Login */
+#modalLogin {
   display: none; /* oculto por defecto */
   position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
+  z-index: 2000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
   background-color: rgba(0,0,0,0.6);
 }
 
-.modal-contenido {
+#modalLogin .modal-contenido {
   background-color: #fff;
-  margin: 10% auto;
-  padding: 1.5rem;
-  border-radius: 8px;
+  margin: 12% auto;
+  padding: 2rem;
+  border-radius: 10px;
   width: 90%;
-  max-width: 500px;
+  max-width: 400px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  text-align: center;
 }
 
-.cerrar {
-  color: #aaa;
-  float: right;
-  font-size: 1.5rem;
-  font-weight: bold;
+#modalLogin h2 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+#modalLogin input {
+  width: 100%;
+  padding: 0.9rem;
+  margin: 0.6rem 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+#modalLogin button {
+  width: 100%;
+  padding: 0.9rem;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 1rem;
 }
 
-.cerrar:hover {
-  color: #000;
+#modalLogin button:hover {
+  background: #2980b9;
 }
 
+/* Botón de logout */
+#btnLogout {
+  margin-top: 10px;
+  padding: 6px 12px;
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
 
+#btnLogout:hover {
+  background: #c0392b;
+}
