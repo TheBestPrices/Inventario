@@ -42,7 +42,7 @@ function logout() {
   // Mostrar solo el login
   document.getElementById("modalLogin").style.display = "block";
 
-  // Cerrar cualquier otro modal
+  // 👇 Cerrar cualquier otro modal
   document.getElementById("modalProducto").classList.remove("show");
   document.getElementById("modalVenta").classList.remove("show");
 }
@@ -234,3 +234,4 @@ async function buscarProducto(e) {
     alert("Error al buscar el producto.");
   }
 }
+
