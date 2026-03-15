@@ -179,7 +179,7 @@ main {
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   text-align: center;
 
-  /* 👇 evitar que se salga en pantallas pequeñas */
+  /* 👇 evitar que se salga en pantallas grandes o pequeñas */
   max-height: 90vh;
   overflow-y: auto;
 }
