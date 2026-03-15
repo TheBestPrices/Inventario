@@ -155,6 +155,46 @@ main {
   background: #c0392b;
 }
 
+/* ===== Modales de producto y venta ===== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.modal-contenido {
+  background-color: #fff;
+  margin: 12% auto;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.cerrar {
+  float: right;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+#btnVender {
+  background: #27ae60;
+  color: #fff;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#btnVender:hover {
+  background: #1e8449;
+}
+
 /* ===== Footer ===== */
 footer {
   background: #2c3e50;
