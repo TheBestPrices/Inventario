@@ -92,15 +92,15 @@ async function registrarProducto(e) {
 let carrito = [];
 
 function agregarAlCarrito(producto, cantidad = 1) {
-  carrito.push({ producto_id: producto.id, cantidad, precio: producto.precio });
+  carrito.push({ producto_id: producto.id, nombre: producto.nombre, cantidad, precio: producto.precio });
   mostrarCarrito();
 }
 
 function mostrarCarrito() {
-  const div = document.getElementById("carrito");
+  const div = document.getElementById("carritoItems"); // 👈 ahora usa el div interno
   div.innerHTML = "";
-  carrito.forEach((item, i) => {
-    div.innerHTML += `<p>${item.cantidad} x Producto #${item.producto_id} → $${item.precio}</p>`;
+  carrito.forEach(item => {
+    div.innerHTML += `<p>${item.cantidad} x ${item.nombre} → $${item.precio}</p>`;
   });
 }
 
@@ -144,7 +144,7 @@ async function listarProductos() {
       <p>${p.descripcion || "Sin descripción"}</p>
       <p>Precio: $${p.precio} - Stock: ${p.stock}</p>
       ${p.imagen_url ? `<img src="${p.imagen_url}" alt="${p.nombre}" style="max-width:150px; border-radius:8px;">` : ""}
-      <button onclick='agregarAlCarrito(${JSON.stringify(p)})'>Agregar al carrito</button>
+      <button onclick="agregarAlCarrito({ id:${p.id}, nombre:'${p.nombre}', precio:${p.precio} })">Agregar al carrito</button>
     `;
     lista.appendChild(div);
   });
@@ -161,7 +161,10 @@ async function verVentas() {
   historial.innerHTML = "<h3>Ventas</h3>";
   ventas.forEach(v => {
     const div = document.createElement("div");
-    div.textContent = `Venta #${v.id} → ${v.nombre}, Cantidad: ${v.cantidad}, Precio: $${v.precio}`;
+    div.className = "venta-item";
+    div.innerHTML = `
+      <strong>Venta #${v.id}</strong> → ${v.nombre} | Cantidad: ${v.cantidad} | Precio: $${v.precio}
+    `;
     historial.appendChild(div);
   });
 }
