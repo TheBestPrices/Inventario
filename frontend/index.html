@@ -7,13 +7,17 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Encabezado moderno -->
+  <!-- Navbar moderno -->
   <header>
     <div class="logo">
       <h1>🚲 POS Kevin</h1>
       <span class="subtitulo">Gestión de Inventario y Ventas</span>
     </div>
     <nav>
+      <button onclick="mostrarSeccion('inventario')">Inventario</button>
+      <button onclick="mostrarSeccion('carrito')">Carrito</button>
+      <button onclick="mostrarSeccion('historial')">Historial</button>
+      <button onclick="mostrarSeccion('registro')">Registrar</button>
       <button onclick="logout()" id="btnLogout" style="display:none;">Cerrar sesión</button>
     </nav>
   </header>
@@ -30,9 +34,22 @@
     </div>
   </div>
 
-  <main style="display:none; grid-template-columns: 1fr 1fr; gap:20px;">
+  <main style="display:none; grid-template-columns: 2fr 1fr; gap:20px;">
+    <!-- Inventario -->
+    <section class="card" id="inventario">
+      <h2>Inventario</h2>
+      <div id="lista"></div>
+    </section>
+
+    <!-- Carrito lateral -->
+    <aside class="card" id="carrito">
+      <h2>Carrito</h2>
+      <div id="carritoItems"></div>
+      <button onclick="abrirModalVenta()">Realizar Venta</button>
+    </aside>
+
     <!-- Registrar Producto -->
-    <section class="card" style="grid-column: span 2;">
+    <section class="card" id="registro" style="grid-column: span 2;">
       <h2>Registrar Producto</h2>
       <form onsubmit="registrarProducto(event)">
         <input type="text" id="nombre" placeholder="Nombre" required>
@@ -46,32 +63,10 @@
       </form>
     </section>
 
-    <!-- Buscador -->
-    <section class="card" style="grid-column: span 2;">
-      <h2>Buscar Producto</h2>
-      <form onsubmit="buscarProducto(event)">
-        <input type="text" id="buscar_codigo" placeholder="Buscar por código o nombre">
-        <button type="submit">🔍 Buscar</button>
-      </form>
-    </section>
-
-    <!-- Inventario -->
-    <section class="card">
-      <h2>Inventario</h2>
-      <div id="lista"></div>
-    </section>
-
-    <!-- Carrito -->
-    <section class="card">
-      <h2>Carrito</h2>
-      <div id="carrito"></div>
-      <button onclick="abrirModalVenta()">Realizar Venta</button>
-    </section>
-
     <!-- Historial -->
-    <section class="card" style="grid-column: span 2;">
+    <section class="card" id="historial" style="grid-column: span 2;">
       <h2>Historial de Ventas</h2>
-      <div id="historial"></div>
+      <div id="historialItems"></div>
     </section>
   </main>
 
