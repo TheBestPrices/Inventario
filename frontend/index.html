@@ -7,10 +7,15 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Encabezado moderno -->
   <header>
-    <h1>📦 Sistema POS</h1>
-    <div id="encabezadoUsuario"></div>
-    <button onclick="logout()" id="btnLogout" style="display:none;">Cerrar sesión</button>
+    <div class="logo">
+      <h1>🚲 POS Kevin</h1>
+      <span class="subtitulo">Gestión de Inventario y Ventas</span>
+    </div>
+    <nav>
+      <button onclick="logout()" id="btnLogout" style="display:none;">Cerrar sesión</button>
+    </nav>
   </header>
 
   <!-- Modal de Login -->
@@ -26,6 +31,30 @@
   </div>
 
   <main style="display:none; grid-template-columns: 1fr 1fr; gap:20px;">
+    <!-- Registrar Producto -->
+    <section class="card" style="grid-column: span 2;">
+      <h2>Registrar Producto</h2>
+      <form onsubmit="registrarProducto(event)">
+        <input type="text" id="nombre" placeholder="Nombre" required>
+        <input type="text" id="categoria" placeholder="Categoría">
+        <input type="number" id="precio" placeholder="Precio" required>
+        <input type="number" id="stock" placeholder="Stock inicial" value="0">
+        <input type="text" id="descripcion" placeholder="Descripción">
+        <input type="file" id="imagen" accept="image/*">
+        <input type="text" id="codigo" placeholder="Código de barras">
+        <button type="submit">Guardar</button>
+      </form>
+    </section>
+
+    <!-- Buscador -->
+    <section class="card" style="grid-column: span 2;">
+      <h2>Buscar Producto</h2>
+      <form onsubmit="buscarProducto(event)">
+        <input type="text" id="buscar_codigo" placeholder="Buscar por código o nombre">
+        <button type="submit">🔍 Buscar</button>
+      </form>
+    </section>
+
     <!-- Inventario -->
     <section class="card">
       <h2>Inventario</h2>
@@ -36,7 +65,7 @@
     <section class="card">
       <h2>Carrito</h2>
       <div id="carrito"></div>
-      <button onclick="confirmarVenta()">Confirmar Venta</button>
+      <button onclick="abrirModalVenta()">Realizar Venta</button>
     </section>
 
     <!-- Historial -->
@@ -45,6 +74,26 @@
       <div id="historial"></div>
     </section>
   </main>
+
+  <!-- Modal Detalle Producto -->
+  <div id="modalProducto" class="modal">
+    <div class="modal-contenido">
+      <span class="cerrar" onclick="cerrarModalProducto()">&times;</span>
+      <div id="detalleProducto"></div>
+      <button onclick="agregarAlCarritoDesdeModal()">Agregar al carrito</button>
+    </div>
+  </div>
+
+  <!-- Modal Venta -->
+  <div id="modalVenta" class="modal">
+    <div class="modal-contenido">
+      <h2>Confirmar Venta</h2>
+      <div id="detalleCarrito"></div>
+      <p id="totalVenta"></p>
+      <button onclick="confirmarVenta()">Confirmar</button>
+      <button onclick="cerrarModalVenta()">Cancelar</button>
+    </div>
+  </div>
 
   <footer>
     <p>Inventario Sevilla © 2026</p>
