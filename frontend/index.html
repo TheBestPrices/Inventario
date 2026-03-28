@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
-  <title>Gestor de Inventario</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POS Kevin</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>📦 Gestor de Inventario</h1>
+    <h1>📦 Sistema POS</h1>
     <div id="encabezadoUsuario"></div>
     <button onclick="logout()" id="btnLogout" style="display:none;">Cerrar sesión</button>
   </header>
@@ -25,98 +25,29 @@
     </div>
   </div>
 
-  <!-- Buscador -->
-  <section class="busqueda">
-    <form onsubmit="buscarProducto(event)">
-      <input type="text" id="buscar_codigo" placeholder="Buscar por código o nombre">
-      <button type="submit" class="lupa">🔍</button>
-    </form>
-  </section>
-
-  <main>
-    <!-- Registrar Producto -->
+  <main style="display:none; grid-template-columns: 1fr 1fr; gap:20px;">
+    <!-- Inventario -->
     <section class="card">
-      <h2>Registrar Producto</h2>
-      <form onsubmit="registrarProducto(event)">
-        <input type="text" id="nombre" placeholder="Nombre" required>
-        <input type="text" id="categoria" placeholder="Categoría">
-        <input type="number" id="precio" placeholder="Precio" required>
-        <input type="number" id="stock" placeholder="Stock inicial" value="0">
-        <input type="text" id="descripcion" placeholder="Descripción">
-        <input type="file" id="imagen" accept="image/*" capture="environment">
-        <input type="text" id="codigo" name="codigo" placeholder="Código de barras">
-        <button type="submit">Guardar</button>
-      </form>
-    </section>
-
-    <!-- Registrar Compra -->
-    <section class="card">
-      <h2>Registrar Compra</h2>
-      <form onsubmit="registrarCompra(event)">
-        <input type="number" id="compra_producto_id" placeholder="ID del producto" required>
-        <input type="number" id="compra_cantidad" placeholder="Cantidad" required>
-        <input type="number" id="compra_costo" placeholder="Costo total" required>
-        <button type="submit">Registrar Compra</button>
-      </form>
-    </section>
-
-    <!-- Registrar Venta -->
-    <section class="card">
-      <h2>Registrar Venta</h2>
-      <form onsubmit="registrarVenta(event)">
-        <input type="number" id="venta_producto_id" placeholder="ID del producto" required>
-        <input type="number" id="venta_cantidad" placeholder="Cantidad" required>
-        <input type="number" id="venta_precio" placeholder="Precio de venta" required>
-        <button type="submit">Registrar Venta</button>
-      </form>
-    </section>
-
-    <!-- Lista de Productos -->
-    <section class="card">
-      <h2>Lista de Productos</h2>
-      <button onclick="listarProductos()">Ver Productos</button>
+      <h2>Inventario</h2>
       <div id="lista"></div>
     </section>
 
-    <!-- Reportes -->
+    <!-- Carrito -->
     <section class="card">
-      <h2>Reporte de Ganancias y Pérdidas</h2>
-      <button onclick="verReporte()">Ver Reporte General</button>
-      <button onclick="verReporteProductos()">Ver Reporte por Producto</button>
-      <div id="reporte"></div>
+      <h2>Carrito</h2>
+      <div id="carrito"></div>
+      <button onclick="confirmarVenta()">Confirmar Venta</button>
     </section>
 
     <!-- Historial -->
-    <section class="card">
-      <h2>Historial de Movimientos</h2>
-      <button onclick="verCompras()">Ver Compras</button>
-      <button onclick="verVentas()">Ver Ventas</button>
+    <section class="card" style="grid-column: span 2;">
+      <h2>Historial de Ventas</h2>
       <div id="historial"></div>
     </section>
   </main>
 
-  <!-- Modal de producto -->
-  <div id="modalProducto" class="modal-flex">
-    <div class="modal-contenido">
-      <span class="cerrar" onclick="cerrarModalProducto()">&times;</span>
-      <div id="detalleProducto"></div>
-      <button id="btnVender">Vender</button>
-    </div>
-  </div>
-
-  <!-- Modal de venta -->
-  <div id="modalVenta" class="modal-flex">
-    <div class="modal-contenido">
-      <h2>Registrar Venta</h2>
-      <p id="ventaProducto"></p>
-      <input type="number" id="cantidadVenta" placeholder="Cantidad a vender">
-      <button onclick="registrarVenta()">Confirmar Venta</button>
-      <button onclick="cerrarModalVenta()">Cancelar</button>
-    </div>
-  </div>
-
   <footer>
-    <p>Inventario © 2026</p>
+    <p>Inventario Sevilla © 2026</p>
   </footer>
 
   <script src="app.js"></script>
