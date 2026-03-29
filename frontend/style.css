@@ -186,3 +186,12 @@ footer {
   padding: 10px;
   margin-top: 20px;
 }
+.btn-x {
+  cursor: pointer;
+  color: red;
+  font-weight: bold;
+  margin-left: 10px;
+}
+.btn-x:hover {
+  color: darkred;
+}
