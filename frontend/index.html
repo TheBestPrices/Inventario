@@ -2,20 +2,18 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>POS Kevin</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Navbar moderno -->
   <header>
-    <div class="logo">
-      <h1>🛵 POS Kevin</h1>
-      <span class="subtitulo">Gestión de Inventario y Ventas</span>
-    </div>
+    <h1>🚲 POS Kevin</h1>
     <nav>
-      <button onclick="logout()" id="btnLogout" style="display:none;">Cerrar sesión</button>
+      <a href="inventario.html">📦 Inventario</a>
+      <a href="carrito.html">🛒 Carrito</a>
+      <a href="historial.html">📑 Historial</a>
     </nav>
+    <button onclick="logout()" id="btnLogout" style="display:none;">Cerrar sesión</button>
     <div id="encabezadoUsuario"></div>
   </header>
 
@@ -31,96 +29,45 @@
     </div>
   </div>
 
-  <!-- Contenido principal -->
-  <main style="display:none; grid-template-columns: 2fr 1fr; gap:20px;">
-    <!-- Registrar Producto arriba -->
-    <section class="card formulario-productos" id="registro" style="grid-column: span 2;">
+  <!-- Registrar Producto -->
+  <main style="display:none;">
+    <section class="card formulario-productos" id="registro">
       <h2 class="titulo-formulario">📦 Registrar Producto</h2>
       <form onsubmit="registrarProducto(event)" class="form-grid">
         <div class="form-group">
           <label for="nombre">Nombre del producto</label>
-          <input type="text" id="nombre" placeholder="Ej: Batería 48V" required>
+          <input type="text" id="nombre" required>
         </div>
-
         <div class="form-group">
           <label for="categoria">Categoría</label>
-          <input type="text" id="categoria" placeholder="Ej: Repuestos">
+          <input type="text" id="categoria">
         </div>
-
         <div class="form-group">
           <label for="precio">Precio</label>
-          <input type="number" id="precio" placeholder="Ej: 1200" required>
+          <input type="number" id="precio" required>
         </div>
-
         <div class="form-group">
           <label for="stock">Stock inicial</label>
-          <input type="number" id="stock" placeholder="Ej: 10" value="0">
+          <input type="number" id="stock" value="0">
         </div>
-
         <div class="form-group">
           <label for="descripcion">Descripción</label>
-          <textarea id="descripcion" placeholder="Detalles del producto"></textarea>
+          <textarea id="descripcion"></textarea>
         </div>
-
         <div class="form-group">
           <label for="imagen">Imagen</label>
           <input type="file" id="imagen" accept="image/*">
         </div>
-
         <div class="form-group">
           <label for="codigo">Código de barras</label>
-          <input type="text" id="codigo" placeholder="Ej: 123456789">
+          <input type="text" id="codigo">
         </div>
-
         <div class="form-actions">
           <button type="submit" class="btn-guardar">💾 Guardar Producto</button>
         </div>
       </form>
     </section>
-
-    <!-- Carrito lateral -->
-    <aside class="card" id="carrito">
-      <h2>Carrito</h2>
-      <div id="carritoItems"></div>
-      <button onclick="abrirModalVenta()">Realizar Venta</button>
-      <button onclick="abrirModalHistorial()">Ver Historial de Ventas</button>
-    </aside>
   </main>
-
-  <!-- Inventario abajo -->
-  <section class="card" id="inventario" style="margin-top:20px;">
-    <h2>Inventario</h2>
-    <div id="lista"></div>
-  </section>
-
-  <!-- Modal Detalle Producto -->
-  <div id="modalProducto" class="modal">
-    <div class="modal-contenido">
-      <span class="cerrar" onclick="cerrarModalProducto()">&times;</span>
-      <div id="detalleProducto"></div>
-      <button onclick="agregarAlCarritoDesdeModal()">Agregar al carrito</button>
-    </div>
-  </div>
-
-  <!-- Modal Venta -->
-  <div id="modalVenta" class="modal">
-    <div class="modal-contenido">
-      <h2>Confirmar Venta</h2>
-      <div id="detalleCarrito"></div>
-      <p id="totalVenta"></p>
-      <button onclick="confirmarVenta()">Confirmar</button>
-      <button onclick="cerrarModalVenta()">Cancelar</button>
-    </div>
-  </div>
-
-  <!-- Modal Historial -->
-  <div id="modalHistorial" class="modal">
-    <div class="modal-contenido">
-      <span class="cerrar" onclick="cerrarModalHistorial()">&times;</span>
-      <h2>Historial de Ventas</h2>
-      <div id="historialItems"></div>
-    </div>
-  </div>
 
   <footer>
     <p>Inventario Sevilla © 2026</p>
