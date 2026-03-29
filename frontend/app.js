@@ -176,6 +176,7 @@ async function listarProductos() {
     headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
   });
   const productos = await res.json();
+ localStorage.setItem("productos", JSON.stringify(productos));
 
   const lista = document.getElementById("lista");
   lista.innerHTML = "";
