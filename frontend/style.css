@@ -1,116 +1,153 @@
 /* ====== Estilos generales ====== */
 body {
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
   margin: 0;
-  background: #f4f4f4;
-  color: #333;
+  padding: 0;
+  color: #2c3e50;
 }
 
-/* ====== Encabezado ====== */
 header {
-  background: linear-gradient(90deg, #007bff, #0056b3);
+  background: #3498db;
   color: white;
-  padding: 20px 30px;
+  padding: 15px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-header h1 {
+header .logo h1 {
   margin: 0;
-  font-size: 1.8rem;
-  font-weight: bold;
-  letter-spacing: 1px;
+  font-size: 1.5em;
 }
 
-#encabezadoUsuario {
-  font-size: 0.95rem;
-  color: #e0e0e0;
+header .subtitulo {
+  font-size: 0.9em;
+  display: block;
 }
 
-/* ====== Botones ====== */
-button {
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  margin-top: 10px;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: background 0.3s ease;
-  font-weight: bold;
-}
-
-button:hover {
-  background: #0056b3;
-}
-
-/* ====== Tarjetas ====== */
 .card {
-  background: white;
+  background: #fff;
   padding: 20px;
   margin: 15px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-/* ====== Inventario ====== */
-#lista {
+/* ====== Formulario de productos ====== */
+.formulario-productos {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.titulo-formulario {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+.form-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
 }
 
-.producto-card {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+.form-group {
+  display: flex;
+  flex-direction: column;
 }
 
-.producto-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #34495e;
 }
 
-.producto-card strong {
-  font-size: 1.1rem;
-  color: #333;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.producto-card span {
-  font-size: 0.9rem;
-  color: #666;
-  display: block;
-  margin-bottom: 6px;
-}
-
-.producto-card img {
-  max-width: 120px;
-  margin-top: 10px;
+.form-group input,
+.form-group textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
   border-radius: 6px;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-actions {
+  grid-column: span 2;
+  text-align: center;
+}
+
+.btn-guardar {
+  background: #3498db;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.btn-guardar:hover {
+  background: #2980b9;
 }
 
 /* ====== Carrito ====== */
-#carrito {
-  background: #fff3cd;
-  padding: 15px;
-  border-radius: 8px;
-  min-height: 50px;
+#carrito button {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
-/* ====== Historial ====== */
-#historial {
-  background: #e9ecef;
-  padding: 15px;
-  border-radius: 8px;
+#carrito button:hover {
+  background: #219150;
 }
 
-/* ====== Modal ====== */
+/* ====== Inventario ====== */
+#inventario h2 {
+  margin-bottom: 10px;
+}
+
+#lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
+}
+
+#lista .producto-card {
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+  text-align: center;
+}
+
+#lista .producto-card img {
+  max-width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+#lista .producto-card h3 {
+  margin: 10px 0 5px;
+  font-size: 1.1em;
+}
+
+#lista .producto-card p {
+  margin: 5px 0;
+  font-size: 0.9em;
+}
+
+/* ====== Modales ====== */
 .modal {
   display: none;
   position: fixed;
@@ -121,51 +158,31 @@ button:hover {
 }
 
 .modal-contenido {
-  background: white;
-  margin: 8% auto;
-  padding: 25px;
-  border-radius: 12px;
+  background: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 8px;
   width: 90%;
   max-width: 500px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  position: relative;
 }
 
 .modal-contenido h2 {
   margin-top: 0;
-  font-size: 1.4rem;
-  color: #007bff;
+}
+
+.cerrar {
+  position: absolute;
+  top: 10px; right: 15px;
+  font-size: 1.5em;
+  cursor: pointer;
 }
 
 /* ====== Footer ====== */
 footer {
-  text-align: center;
-  padding: 15px;
-  background: #007bff;
+  background: #3498db;
   color: white;
+  text-align: center;
+  padding: 10px;
   margin-top: 20px;
-  font-weight: bold;
-}
-
-/* ====== Responsivo ====== */
-@media (max-width: 768px) {
-  main {
-    grid-template-columns: 1fr !important;
-  }
-
-  header {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  button {
-    width: 100%;
-  }
-
-  .producto-card {
-    text-align: center;
-  }
-
-  .producto-card img {
-    max-width: 100%;
-  }
 }
