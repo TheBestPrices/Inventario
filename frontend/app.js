@@ -94,21 +94,39 @@ async function registrarProducto(e) {
 let carrito = [];
 
 function agregarAlCarrito(producto, cantidad = 1) {
-  carrito.push({ producto_id: producto.id, nombre: producto.nombre, cantidad, precio: producto.precio });
+  carrito.push({
+    producto_id: producto.id,
+    nombre: producto.nombre,
+    cantidad,
+    precio: producto.precio
+  });
   mostrarCarrito();
 }
-
 function mostrarCarrito() {
   const div = document.getElementById("carritoItems");
   div.innerHTML = "";
+
+  let total = 0;
+
   carrito.forEach(item => {
+    const subtotal = item.cantidad * item.precio;
+    total += subtotal;
+
     div.innerHTML += `
       <div class="carrito-item">
         <span>${item.cantidad} x ${item.nombre}</span>
-        <span>→ $${item.precio}</span>
+        <span>→ $${subtotal.toFixed(2)}</span>
       </div>
     `;
   });
+
+  // Mostrar total al final
+  div.innerHTML += `
+    <hr>
+    <div class="carrito-total">
+      <strong>Total de la venta:</strong> $${total.toFixed(2)}
+    </div>
+  `;
 }
 
 async function confirmarVenta() {
