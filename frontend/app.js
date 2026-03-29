@@ -147,20 +147,31 @@ function mostrarCarrito() {
 }
 async function confirmarVenta() {
   try {
-    for (const item of carrito) {
-      await fetch(`${API_URL}/ventas`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
-        },
-        body: JSON.stringify(item)
-      });
-    }
-    alert("Venta confirmada");
+    // Construir objeto de venta con todos los productos y el total
+    const venta = {
+      productos: carrito,
+      total: carrito.reduce((acc, item) => acc + item.cantidad * item.precio, 0)
+    };
+
+    // Enviar al backend
+    const res = await fetch(`${API_URL}/ventas`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      },
+      body: JSON.stringify(venta)
+    });
+
+    const data = await res.json();
+    alert("Venta confirmada: ID " + data.id);
+
+    // Limpiar carrito después de registrar la venta
     carrito = [];
     localStorage.removeItem("carrito");
     mostrarCarrito();
+
+    // Actualizar historial
     verVentas();
   } catch (err) {
     console.error(err);
