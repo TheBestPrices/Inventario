@@ -121,7 +121,6 @@ function mostrarCarrito() {
   const div = document.getElementById("carritoItems");
   div.innerHTML = "";
 
-  // Recuperar carrito desde localStorage
   carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
   let total = 0;
@@ -134,7 +133,7 @@ function mostrarCarrito() {
       <div class="carrito-item">
         <span>${item.cantidad} x ${item.nombre}</span>
         <span>→ $${subtotal.toFixed(2)}</span>
-        <button class="btn-eliminar" onclick="eliminarDelCarrito(${index})">❌</button>
+        <span class="btn-x" onclick="eliminarDelCarrito(${index})">✖</span>
       </div>
     `;
   });
