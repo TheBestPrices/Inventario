@@ -126,7 +126,7 @@ function mostrarCarrito() {
 
   let total = 0;
 
-  carrito.forEach(item => {
+  carrito.forEach((item, index) => {
     const subtotal = item.cantidad * item.precio;
     total += subtotal;
 
@@ -134,6 +134,7 @@ function mostrarCarrito() {
       <div class="carrito-item">
         <span>${item.cantidad} x ${item.nombre}</span>
         <span>→ $${subtotal.toFixed(2)}</span>
+        <button class="btn-eliminar" onclick="eliminarDelCarrito(${index})">❌</button>
       </div>
     `;
   });
@@ -145,7 +146,6 @@ function mostrarCarrito() {
     </div>
   `;
 }
-
 async function confirmarVenta() {
   try {
     for (const item of carrito) {
