@@ -97,10 +97,15 @@ function agregarAlCarrito(producto, cantidad = 1) {
 }
 
 function mostrarCarrito() {
-  const div = document.getElementById("carritoItems"); // 👈 ahora usa el div interno
+  const div = document.getElementById("carritoItems");
   div.innerHTML = "";
   carrito.forEach(item => {
-    div.innerHTML += `<p>${item.cantidad} x ${item.nombre} → $${item.precio}</p>`;
+    div.innerHTML += `
+      <div class="carrito-item">
+        <span>${item.cantidad} x ${item.nombre}</span>
+        <span>→ $${item.precio}</span>
+      </div>
+    `;
   });
 }
 
@@ -135,16 +140,21 @@ async function listarProductos() {
 
   const lista = document.getElementById("lista");
   lista.innerHTML = "";
+
   productos.forEach(p => {
     const div = document.createElement("div");
     div.classList.add("producto-card");
 
     div.innerHTML = `
-      <h3>${p.nombre} (${p.categoria})</h3>
-      <p>${p.descripcion || "Sin descripción"}</p>
-      <p>Precio: $${p.precio} - Stock: ${p.stock}</p>
-      ${p.imagen_url ? `<img src="${p.imagen_url}" alt="${p.nombre}" style="max-width:150px; border-radius:8px;">` : ""}
-      <button onclick="agregarAlCarrito({ id:${p.id}, nombre:'${p.nombre}', precio:${p.precio} })">Agregar al carrito</button>
+      ${p.imagen_url ? `<img src="${p.imagen_url}" alt="${p.nombre}">` : `<img src="placeholder.jpg" alt="Sin imagen">`}
+      <h3>${p.nombre}</h3>
+      <p class="categoria">${p.categoria || "Sin categoría"}</p>
+      <p class="descripcion">${p.descripcion || "Sin descripción"}</p>
+      <p><strong>Precio:</strong> $${p.precio}</p>
+      <p><strong>Stock:</strong> ${p.stock}</p>
+      <button class="btn-agregar" onclick="agregarAlCarrito({ id:${p.id}, nombre:'${p.nombre}', precio:${p.precio} })">
+        ➕ Agregar al carrito
+      </button>
     `;
     lista.appendChild(div);
   });
@@ -157,14 +167,29 @@ async function verVentas() {
   });
   const ventas = await res.json();
 
-  const historial = document.getElementById("historial");
-  historial.innerHTML = "<h3>Ventas</h3>";
-  ventas.forEach(v => {
-    const div = document.createElement("div");
-    div.className = "venta-item";
-    div.innerHTML = `
-      <strong>Venta #${v.id}</strong> → ${v.nombre} | Cantidad: ${v.cantidad} | Precio: $${v.precio}
-    `;
-    historial.appendChild(div);
-  });
+  const historialItems = document.getElementById("historialItems");
+  historialItems.innerHTML = `
+    <table class="tabla-ventas">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${ventas.map(v => `
+          <tr>
+            <td>${v.id}</td>
+            <td>${v.nombre}</td>
+            <td>${v.cantidad}</td>
+            <td>$${v.precio}</td>
+            <td>${new Date(v.fecha).toLocaleString()}</td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `;
 }
