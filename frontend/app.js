@@ -93,13 +93,24 @@ async function registrarProducto(e) {
 // ================== CARRITO DE VENTA ==================
 let carrito = [];
 
-function agregarAlCarrito(producto, cantidad = 1) {
+function agregarAlCarrito(productoId, cantidad = 1) {
+  // Recuperar lista de productos desde localStorage
+  const productos = JSON.parse(localStorage.getItem("productos")) || [];
+
+  // Buscar el producto por id
+  const producto = productos.find(p => p.id === productoId);
+  if (!producto) return;
+
   carrito.push({
     producto_id: producto.id,
     nombre: producto.nombre,
     cantidad,
     precio: producto.precio
   });
+
+  // Guardar carrito en localStorage
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+
   mostrarCarrito();
 }
 function mostrarCarrito() {
@@ -172,9 +183,9 @@ async function listarProductos() {
       <p class="descripcion">${p.descripcion || "Sin descripción"}</p>
       <p><strong>Precio:</strong> $${p.precio}</p>
       <p><strong>Stock:</strong> ${p.stock}</p>
-      <button class="btn-agregar" onclick="agregarAlCarrito({ id:${p.id}, nombre:'${p.nombre}', precio:${p.precio} })">
-        ➕ Agregar al carrito
-      </button>
+      <button class="btn-agregar" onclick="agregarAlCarrito(${p.id})">
+  ➕ Agregar al carrito
+</button>
     `;
     lista.appendChild(div);
   });
