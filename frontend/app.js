@@ -77,7 +77,7 @@ async function registrarProducto(e) {
     formData.append("imagen", imagenFile);
   }
 
-  // 👇 Aquí estaba el problema: ahora sí se envía el código
+  // 👇 ahora sí se envía el código
   formData.append("codigo", document.getElementById("codigo").value);
 
   const res = await fetch(`${API_URL}/productos`, {
@@ -90,6 +90,7 @@ async function registrarProducto(e) {
   alert("Producto registrado: " + data.nombre);
   listarProductos();
 }
+
 // ================== CARRITO DE VENTA ==================
 let carrito = [];
 
@@ -111,19 +112,17 @@ function agregarAlCarrito(productoId, cantidad = 1) {
   // Guardar carrito en localStorage
   localStorage.setItem("carrito", JSON.stringify(carrito));
 
-  console.log("Carrito actualizado:", carrito); // 👈 aquí ves el resultado
+  console.log("Carrito actualizado:", carrito); // 👈 confirmación en consola
 
   mostrarCarrito();
 }
 
-  // Guardar carrito en localStorage
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-
-  mostrarCarrito();
-}
 function mostrarCarrito() {
   const div = document.getElementById("carritoItems");
   div.innerHTML = "";
+
+  // Recuperar carrito desde localStorage
+  carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
   let total = 0;
 
@@ -139,7 +138,6 @@ function mostrarCarrito() {
     `;
   });
 
-  // Mostrar total al final
   div.innerHTML += `
     <hr>
     <div class="carrito-total">
@@ -162,6 +160,7 @@ async function confirmarVenta() {
     }
     alert("Venta confirmada");
     carrito = [];
+    localStorage.removeItem("carrito");
     mostrarCarrito();
     verVentas();
   } catch (err) {
@@ -176,7 +175,9 @@ async function listarProductos() {
     headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
   });
   const productos = await res.json();
- localStorage.setItem("productos", JSON.stringify(productos));
+
+  // Guardar productos en localStorage
+  localStorage.setItem("productos", JSON.stringify(productos));
 
   const lista = document.getElementById("lista");
   lista.innerHTML = "";
@@ -193,8 +194,8 @@ async function listarProductos() {
       <p><strong>Precio:</strong> $${p.precio}</p>
       <p><strong>Stock:</strong> ${p.stock}</p>
       <button class="btn-agregar" onclick="agregarAlCarrito(${p.id})">
-  ➕ Agregar al carrito
-</button>
+        ➕ Agregar al carrito
+      </button>
     `;
     lista.appendChild(div);
   });
@@ -233,18 +234,15 @@ async function verVentas() {
     </table>
   `;
 }
+
+// ================== AUTO-CARGA POR PÁGINA ==================
 document.addEventListener("DOMContentLoaded", () => {
-  // Inventario
   if (window.location.pathname.endsWith("inventario.html")) {
     listarProductos();
   }
-
-  // Historial
   if (window.location.pathname.endsWith("historial.html")) {
     verVentas();
   }
-
-  // Carrito
   if (window.location.pathname.endsWith("carrito.html")) {
     mostrarCarrito();
   }
