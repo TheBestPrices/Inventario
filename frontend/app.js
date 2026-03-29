@@ -77,6 +77,9 @@ async function registrarProducto(e) {
     formData.append("imagen", imagenFile);
   }
 
+  // 👇 Aquí estaba el problema: ahora sí se envía el código
+  formData.append("codigo", document.getElementById("codigo").value);
+
   const res = await fetch(`${API_URL}/productos`, {
     method: "POST",
     headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` },
@@ -87,7 +90,6 @@ async function registrarProducto(e) {
   alert("Producto registrado: " + data.nombre);
   listarProductos();
 }
-
 // ================== CARRITO DE VENTA ==================
 let carrito = [];
 
