@@ -195,3 +195,19 @@ async function verVentas() {
     </table>
   `;
 }
+document.addEventListener("DOMContentLoaded", () => {
+  // Inventario
+  if (window.location.pathname.endsWith("inventario.html")) {
+    listarProductos();
+  }
+
+  // Historial
+  if (window.location.pathname.endsWith("historial.html")) {
+    verVentas();
+  }
+
+  // Carrito
+  if (window.location.pathname.endsWith("carrito.html")) {
+    mostrarCarrito();
+  }
+});
