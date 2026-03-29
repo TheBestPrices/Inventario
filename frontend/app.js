@@ -94,12 +94,12 @@ async function registrarProducto(e) {
 let carrito = [];
 
 function agregarAlCarrito(productoId, cantidad = 1) {
-  // Recuperar lista de productos desde localStorage
   const productos = JSON.parse(localStorage.getItem("productos")) || [];
-
-  // Buscar el producto por id
   const producto = productos.find(p => p.id === productoId);
-  if (!producto) return;
+  if (!producto) {
+    console.warn("Producto no encontrado con id:", productoId);
+    return;
+  }
 
   carrito.push({
     producto_id: producto.id,
@@ -107,6 +107,14 @@ function agregarAlCarrito(productoId, cantidad = 1) {
     cantidad,
     precio: producto.precio
   });
+
+  // Guardar carrito en localStorage
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+
+  console.log("Carrito actualizado:", carrito); // 👈 aquí ves el resultado
+
+  mostrarCarrito();
+}
 
   // Guardar carrito en localStorage
   localStorage.setItem("carrito", JSON.stringify(carrito));
