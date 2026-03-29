@@ -12,7 +12,27 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Servir carpeta frontend (donde están tus HTML, CSS y JS)
 app.use(express.static(path.join(__dirname, "frontend")));
+
+// Ruta raíz → index.html
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "index.html"));
+});
+
+// Rutas directas para tus páginas nuevas
+app.get("/inventario.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "inventario.html"));
+});
+
+app.get("/carrito.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "carrito.html"));
+});
+
+app.get("/historial.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "historial.html"));
+});
 
 // Configuración de multer (memoria en vez de disco)
 const upload = multer({ storage: multer.memoryStorage() });
@@ -67,7 +87,7 @@ const supabase = createClient(
   `);
 })();
 
-// ================== RUTAS ==================
+// ================== RUTAS API ==================
 
 // Registrar producto con foto
 app.post("/productos", upload.single("imagen"), async (req, res) => {
@@ -114,7 +134,7 @@ app.get("/productos", async (req, res) => {
   }
 });
 
-// Registrar venta (con actualización de stock)
+// Registrar venta
 app.post("/ventas", async (req, res) => {
   const { producto_id, cantidad, precio } = req.body;
   try {
@@ -149,7 +169,7 @@ app.get("/ventas", async (req, res) => {
   }
 });
 
-// Login seguro con bcrypt + JWT
+// Login seguro
 app.post("/login", async (req, res) => {
   const { usuario, contrasena } = req.body;
   try {
