@@ -164,7 +164,18 @@ async function confirmarVenta() {
     });
 
     const data = await res.json();
-    alert("Venta confirmada: ID " + data.id);
+    console.log("Respuesta del backend:", data);
+
+    // Ajuste flexible para mostrar confirmación
+    if (data.id) {
+      alert("Venta confirmada: ID " + data.id);
+    } else if (data.ventaId) {
+      alert("Venta confirmada: ID " + data.ventaId);
+    } else if (data.mensaje) {
+      alert("Venta confirmada: " + data.mensaje);
+    } else {
+      alert("Venta confirmada correctamente");
+    }
 
     // Limpiar carrito después de registrar la venta
     carrito = [];
@@ -178,7 +189,6 @@ async function confirmarVenta() {
     alert("Error al confirmar la venta.");
   }
 }
-
 // ================== LISTAR PRODUCTOS ==================
 async function listarProductos() {
   const res = await fetch(`${API_URL}/productos`, {
